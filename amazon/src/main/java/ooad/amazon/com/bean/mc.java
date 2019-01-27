@@ -9,14 +9,47 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import ooad.amazon.com.dao.AdvertisementDAO;
+
 public class mc {
 
 	public static void main(String[] args) {
+		System.out.println("ssup naru");
+		
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session ses = sf.openSession();
 		ses.beginTransaction();
 
+		Advertisment ad1 = new Advertisment ();
+		ad1.setUrl("images/advertisments/c4.jpg");
+		ad1.setCategorytoshow("Prime");
+		ses.save(ad1);
 		
+		Advertisment ad2 = new Advertisment ();
+		ad2.setUrl("images/advertisments/c2.jpg");
+		ad2.setCategorytoshow("Fashion");
+		ses.save(ad2);
+		
+		Advertisment ad3 = new Advertisment ();
+		ad3.setUrl("images/advertisments/c3.jpg");
+		ad3.setCategorytoshow("Mobile");
+		ses.save(ad3);
+		
+		ses.getTransaction().commit();
+		ses.close();
+		
+		System.out.println("ssup naru2");
+		
+		
+		List<Advertisment> lk = AdvertisementDAO.getAllAdvertisments();
+		for (Advertisment a : lk) {
+			System.out.println(a.getUrl());
+		}
+
+		System.out.println("ssup naru 3");
+		
+	}
+		/*
 		  Customer fs = new Customer(); fs.setFname("Bhushan");
 		  fs.setLname("Singh"); fs.setDob(Calendar.getInstance().getTime());
 		  fs.setContact_no("9025412360"); fs.setPassword("9025412360");
@@ -118,6 +151,6 @@ public class mc {
 		ses.getTransaction().commit();
 		ses.close();
 
-	}
+	}*/
 
 }
