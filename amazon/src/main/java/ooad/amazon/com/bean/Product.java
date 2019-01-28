@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -31,6 +32,7 @@ public class Product {
 	private int quantityleft;
 	private String description;
 	private float starratings;
+	
 	@OneToMany
 	@JoinColumn(name="prodId")
 	List<ProductImages> product_images = new ArrayList<ProductImages>();

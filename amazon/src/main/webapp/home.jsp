@@ -30,7 +30,7 @@
 <!-- custom style -->
 <link href="css/ui.css" rel="stylesheet" type="text/css"/>
 <link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
-<link href="css/custom.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+<link href="css/custom.css" rel="stylesheet"  />
 
 <!-- custom javascript -->
 <script src="js/script.js" type="text/javascript"></script>
@@ -125,7 +125,7 @@ $.get(api , function(data, status){
   <div class="container row">
 	<!-- Amazon Logo -->
 	<div class="col-md-3">
-  	<a class="navbar-brand" href="#"><img class="logo" src="images/logos/amazon.png" alt="alibaba style e-commerce html template file" title="alibaba e-commerce html css theme"></a>
+  	<a class="navbar-brand" href="home.jsp"><img class="logo" src="images/logos/amazon.png" alt="alibaba style e-commerce html template file" title="alibaba e-commerce html css theme"></a>
     <a href="#"  data-toggle="popover" data-trigger="hover" data-title="Unlimited FREE fast delivery, videos, music & more" data-content="Prime members enjoy unlimited free, fast delivery on eligible product items, video streaming, exclusive access to deals and more." style="position:relative; left:-50px;top:10px;"><small>Try Prime</small></a>
 	</div>
 	<!-- Amazon Logo End -->
@@ -202,12 +202,26 @@ $.get(api , function(data, status){
 						</div>
 					</div>
 				</a>
-				<div class="dropdown-menu">
-				 <!--  dropdown-menu .// -->
+				<div class="dropdown-menu" style="width:200px; padding-bottom: 0px;">
+				<ul style="padding:5px;">
+					<li class="list-manager"><div class="form-group" ><a href="login.html"><button type="submit" class="btn btn-warning btn-block"> Sign In  </button></a></div></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/css/homepage.html/ref=nav_youraccount_ya">Your Account</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/css/order-history/ref=nav_youraccount_orders">Your Order</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/registry/wishlist/ref=nav_youraccount_wl?ie=UTF8&requiresSignIn=1">Your Wishlist</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/yourstore/ref=nav_youraccount_recs">Your Recommendations</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/primecentral/ref=nav_youraccount_prime">Your Prime Membership</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/b/ref=nav_youraccount_dvm_crs_gat_in_tn_yraccount?_encoding=UTF8&node=10882806031">Your Prime Video</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/subscribe-and-save/manage/ref=nav_youraccount_sns">Your Subscribe & save items</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/business?_encoding=UTF8&node=11476704031&ref_=nav_ya_flyout_b2b_reg">Your Amazon Business Account</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/p2p/ref=nav_youraccount_sell">Your Seller Account</a></li>
+					<li class="list-manager"><a href="https://www.amazon.in/gp/digital/fiona/manage/ref=nav_youraccount_myk">Manage your content and devices</a></li>
+
+
+				</ul>
 			</div>  <!-- widget-header .// -->
 			</div> <!-- col.// -->
 			
-			<a href="#" class="widget-header">
+			<a href="prime.html" class="widget-header">
 					<div class="icontext">	
 						<div class="text-wrap text-light">
 						<small>
@@ -218,7 +232,7 @@ $.get(api , function(data, status){
 				</a>
 			</div>
 			<div class="col-auto">
-			<a href="#" class="widget-header">
+			<a href="wishlist.html" class="widget-header">
 					<div class="icontext">	
 					
 						<div class="text-wrap text-light">
@@ -228,7 +242,7 @@ $.get(api , function(data, status){
 				</a>
 			</div>
 			<div class="col-auto">
-				<a href="#" class="widget-header">
+				<a href="check_out.html" class="widget-header">
 					<div class="icontext">
 												<div class="icon-wrap"><i class="text-light icon-sm  fa fa-shopping-cart"></i></div>
 						<span class="small round badge badge-secondary">0</span>
