@@ -30,7 +30,15 @@ public class User {
 	private String profilePic;
 	
 	
-    @ElementCollection
+	
+	
+	
+    @Override
+	public String toString() {
+		return "User [id=" + id + ", password=" + password + ", emailid=" + emailid + ", is_customer=" + is_customer
+				+ ", profilePic=" + profilePic + ", addrlist=" + addrlist + ", cardlist=" + cardlist + "]";
+	}
+	@ElementCollection
     @GenericGenerator(name="addrGenerator",strategy="sequence")
     @CollectionId(
         columns=@Column(name="aid"),

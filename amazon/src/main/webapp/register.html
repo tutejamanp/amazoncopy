@@ -37,86 +37,40 @@
 
 <script type="text/javascript">
 
-var next = 1;			// fixed, please do not modfy;
-var current = 0;		// fixed, please do not modfy;
-var interval = 4000;	// You can set single picture show time;
-var fadeTime = 800;	// You can set fadeing-transition time;
-var imgNum = 5;		
+$(document).ready(function() {
+    $("#registerbutton").click(function(event){
+    	
+    	alert("Call success");
+    	
+    	var obj = {
+    			fullname	: $("#fullname").val(),
+    			email 		: $("#email").val(),
+    			phonenumber	: $("#phonenumber").val(),
+    			password1	: $("#password1").val()
+    	};
 
-
-function nextFadeIn(){
-	//make image fade in and fade out at one time, without splash vsual;
-	$('.fadeImg img').eq(current).delay(interval).fadeOut(fadeTime)
-	.end().eq(next).delay(interval).hide().fadeIn(fadeTime, nextFadeIn);
-	    
-	// if You have 5 images, then (eq) range is 0~4 
-	// so we should reset to 0 when value > 4; 
-	if(next < imgNum-1){ next++; } else { next = 0;}
-	if(current < imgNum-1){ current++; } else { current =0; }
-};
-$(document).ready(function(){
-console.log("here");
-
-var api;
-api = "http://localhost:8055/amazon/webapi/AdvertismentController/advertisments";
-
-
-$.get(api , function(data, status){
-    console.log("hello");
-    myString = "";
-	for(i=0;i< data.length;i++)
-		{
-		if(i == 0) {
-			var myString = myString+ "<div class='item-slide'>		<img src='http://localhost:8055/amazon/"+data[i].url+"'>		</div>";
-
-		} else {
-			var myString = myString+ "<div class='item-slide'>		<img style='display:none' src='http://localhost:8055/amazon/"+data[i].url+"'>		</div>";
-	
-		}
+    	var jersey_url = "/UserController/saveuser";
+    	$.ajax({
+			type: 'POST', // GET
+			url: "http://localhost:8055/amazon/webapi"+jersey_url,
+			data: obj,
+			cache : false,
+			error : function(jqXHR, textStatus, errorThrown) {
+				$("#messages").append("<li style='color: red;'>" + textStatus + " apa "+ errorThrown.responseText + "</li>");
+			},
+			success: function(){
+				alert(obj);
+			},
+		    fail: function(xhr, textStatus, errorThrown){
+		        alert('request failed');
+		     }
+		});
 		
-		/* if(i==0){
-    		 $('#carouselList').append(
-    				 '<li data-target="#myCarousel'+ i +'" data-slide-to="' + i +'" class="active"></li>'
-    		);
-    		 $('#carouselAddArea').append(
-    				 '<div class="item active">' +
-    			      	'<img src="' + data[i].picUrl + '" alt="Chicago">' +
-    			      	'<label>Roll No: ' + data[i].rno + '</label><br>' + 
-    			      	'<label>Name: ' + data[i].name + '</label><br><br>' + 
-    			      	'<label>Physics: ' + data[i].marksPhysics + '</label><br>' + 
-    			      	'<label>Chemistry: ' + data[i].marksChemistry + '</label><br>' + 
-    			      	'<label>Maths: ' + data[i].marksMaths + '</label><br>' + 
-    			      	'<label>Grade: ' + data[i].grade + '</label>' + 
-    			    '</div>'
-    		);
-		}
-		else{
-			 $('#carouselList').append(
-    				 '<li data-target="#myCarousel'+ i +'" data-slide-to="' + i +'"></li>'
-    		);
-			 $('#carouselAddArea').append(
-    				 '<div class="item">' +
-    			      	'<img src="' + data[i].picUrl + '" alt="Chicago">' +
-    			      	'<label>Roll No: ' + data[i].rno + '</label><br>' + 
-    			      	'<label>Name: ' + data[i].name + '</label><br><br>' + 
-    			      	'<label>Physics: ' + data[i].marksPhysics + '</label><br>' + 
-    			      	'<label>Chemistry: ' + data[i].marksChemistry + '</label><br>' + 
-    			      	'<label>Maths: ' + data[i].marksMaths + '</label><br>' + 
-    			      	'<label>Grade: ' + data[i].grade + '</label>' + 
-    			    '</div>'
-    		);
-		} */
-		}
-	$('#myAdverts').html(myString+"");
-	
-	$('.fadeImg').css('position','relative');
-	$('.fadeImg img').css({'position':'absolute','width':'100%','height':'500px'});
-
-	nextFadeIn();
-});
-
-});
+		});
+ });
+//jquery end
 </script>
+
 
 </head>
 <body>

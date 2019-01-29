@@ -43,7 +43,10 @@ var interval = 4000;	// You can set single picture show time;
 var fadeTime = 800;	// You can set fadeing-transition time;
 var imgNum = 5;		
 
-
+function SignOut() {
+	localStorage.removeItem("email");
+	window.location.href = "http://localhost:8055/amazon/";
+}
 function nextFadeIn(){
 	//make image fade in and fade out at one time, without splash vsual;
 	$('.fadeImg img').eq(current).delay(interval).fadeOut(fadeTime)
@@ -56,6 +59,18 @@ function nextFadeIn(){
 };
 $(document).ready(function(){
 console.log("here");
+console.log(localStorage.getItem("email"));
+
+if(localStorage.getItem("email") == null) {
+	$('#nameText').text("Hello, Sign In");
+	$('#deliverTo').text("");
+	//$('#myAmazon').text("Your Amazon");m
+} else {
+	$('#nameText').text("Hello, " + localStorage.getItem("email").split("@")[0]);
+	$('#deliverTo').text("Deliver To, " + localStorage.getItem("email").split("@")[0]);
+	$('#myAmazon').text(localStorage.getItem("email").split("@")[0]+"'s Amazon");
+	$('#signInButton').hide();
+}
 
 var api;
 api = "http://localhost:8055/amazon/webapi/AdvertismentController/advertisments";
@@ -126,7 +141,7 @@ $.get(api , function(data, status){
 	<!-- Amazon Logo -->
 	<div class="col-md-3">
   	<a class="navbar-brand" href="home.jsp"><img class="logo" src="images/logos/amazon.png" alt="alibaba style e-commerce html template file" title="alibaba e-commerce html css theme"></a>
-    <a href="#"  data-toggle="popover" data-trigger="hover" data-title="Unlimited FREE fast delivery, videos, music & more" data-content="Prime members enjoy unlimited free, fast delivery on eligible product items, video streaming, exclusive access to deals and more." style="position:relative; left:-50px;top:10px;"><small>Try Prime</small></a>
+    <a href="404.html"  data-toggle="popover" data-trigger="hover" data-title="Unlimited FREE fast delivery, videos, music & more" data-content="Prime members enjoy unlimited free, fast delivery on eligible product items, video streaming, exclusive access to deals and more." style="position:relative; left:-50px;top:10px;"><small>Try Prime</small></a>
 	</div>
 	<!-- Amazon Logo End -->
 	
@@ -168,18 +183,18 @@ $.get(api , function(data, status){
 	<div class="col-lg-7-24 col-sm-3">
 	<div class="row">
 		<div class="col-sm-6"><i class="fas fa-map-marker-alt"></i>
-			<small>Deliver To Tushar</small></br>
+			<small id="deliverTo">Deliver To Tushar</small></br>
 			<b>Bengaluru 560010</b>
 		</div>
 		<div class="col-sm-5 category-wrap dropdown py-1">
 		<button type="button" class="btn background-amazon  dropdown-toggle" data-toggle="dropdown" ><b> Shop By Categories</b></button>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
-			<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
-			<a class="dropdown-item" href="#">Auto / Transportation</a>
-			<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
-			<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
-			<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a> 
+			<a class="dropdown-item" href="404.html">Machinery / Mechanical Parts / Tools </a>
+			<a class="dropdown-item" href="404.html">Consumer Electronics / Home Appliances </a>
+			<a class="dropdown-item" href="404.html">Auto / Transportation</a>
+			<a class="dropdown-item" href="404.html">Apparel / Textiles / Timepieces </a>
+			<a class="dropdown-item" href="404.html">Home & Garden / Construction / Lights </a>
+			<a class="dropdown-item" href="404.html">Beauty & Personal Care / Health </a> 
 		</div>
 	</div>
 	</div>
@@ -187,24 +202,23 @@ $.get(api , function(data, status){
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		<a class="text-light" href="#">Buy Again</a> <a  class="text-light" href="#">Tushar's Amazon</a> <a  class="text-light" href="#">Today's Deals</a> <a class="text-light" href="#">Amazon Pay</a> <a class="text-light" href="#">Sell</a> <a class="text-light" href="#">Customer Service</a>	 <!-- search-wrap .end// -->
-	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="404.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">
 			<div class="widget-header dropdown">
-				<a href="#" data-toggle="dropdown" data-offset="20,10">
+				<a href="404.html" data-toggle="dropdown" data-offset="20,10">
 					<div class="icontext">
 						
 						<div class="text-wrap text-light">
-							<small>Hello, Tushar<br/><b> Your Orders</b>
+							<small> <div id="nameText">Hello, Sign In</div><b> Your Orders</b>
 							<i class="fa fa-caret-down"></i> </small>	
 						</div>
 					</div>
 				</a>
 				<div class="dropdown-menu" style="width:200px; padding-bottom: 0px;">
 				<ul style="padding:5px;">
-					<li class="list-manager"><div class="form-group" ><a href="login.html"><button type="submit" class="btn btn-warning btn-block"> Sign In  </button></a></div></li>
+					<li class="list-manager"><div class="form-group" id="signInButton"><a href="login.html"><button type="submit" class="btn btn-warning btn-block"> Sign In  </button></a></div></li>
 					<li class="list-manager"><a href="https://www.amazon.in/gp/css/homepage.html/ref=nav_youraccount_ya">Your Account</a></li>
 					<li class="list-manager"><a href="https://www.amazon.in/gp/css/order-history/ref=nav_youraccount_orders">Your Order</a></li>
 					<li class="list-manager"><a href="https://www.amazon.in/gp/registry/wishlist/ref=nav_youraccount_wl?ie=UTF8&requiresSignIn=1">Your Wishlist</a></li>
@@ -215,7 +229,8 @@ $.get(api , function(data, status){
 					<li class="list-manager"><a href="https://www.amazon.in/business?_encoding=UTF8&node=11476704031&ref_=nav_ya_flyout_b2b_reg">Your Amazon Business Account</a></li>
 					<li class="list-manager"><a href="https://www.amazon.in/p2p/ref=nav_youraccount_sell">Your Seller Account</a></li>
 					<li class="list-manager"><a href="https://www.amazon.in/gp/digital/fiona/manage/ref=nav_youraccount_myk">Manage your content and devices</a></li>
-
+					<li class="list-manager"><a href="#" onclick="SignOut();">Sign Out</a></li>
+					
 
 				</ul>
 			</div>  <!-- widget-header .// -->
@@ -300,267 +315,344 @@ $.get(api , function(data, status){
 <div class="container">
 <div class="row-sm">
 <div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/3.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">Good item name</a></h6>
-			
-			<div class="price-wrap">
-				<span class="price-new">$1280</span>
-				<del class="price-old">$1980</del>
-			</div> <!-- price-wrap.// -->
-			
-		</figcaption>
-	</figure> <!-- card // -->
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>Meet The New Amazon Echo</h4></div>
+        <div class="img-wrap"> <img src="http://localhost:8055/amazon/images/categories/1.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Voice Control</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Explore all</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
 </div> <!-- col // -->
 <div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/4.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">The name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>Up to ₹1,500 back*</h4></div>
+        <div class="img-wrap"> <img src="images/categories/2.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>On ICICI debit & credit card EMI. *T&C Apply</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Know More</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
 </div> <!-- col // -->
 <div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/5.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">Name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
-</div> <!-- col // -->
-<div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/6.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">The name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
-</div> <!-- col // -->
-<div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/3.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">Good item name</a></h6>
-			
-			<div class="price-wrap">
-				<span class="price-new">$1280</span>
-				<del class="price-old">$1980</del>
-			</div> <!-- price-wrap.// -->
-			
-		</figcaption>
-	</figure> <!-- card // -->
-</div> <!-- col // -->
-<div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/4.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">The name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
-</div> <!-- col // -->
-<div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/5.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">Name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
-</div> <!-- col // -->
-<div class="col-md-3">
-	<figure class="card card-product">
-		<div class="img-wrap"> <img src="images/items/6.jpg"></div>
-		<figcaption class="info-wrap">
-			<h6 class="title "><a href="#">The name of product</a></h6>
-			<div class="price-wrap">
-				<span class="price-new">$280</span>
-			</div> <!-- price-wrap.// -->
-		</figcaption>
-	</figure> <!-- card // -->
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>Fire TV Stick</h4></div>
+        <div class="img-wrap"> <img src="images/categories/3.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Stream movies, TV shows & more | ₹3,999</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Shop now</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> <!-- col // --><div class="col-md-3">
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>Get Amazon Kindle</h4></div>
+        <div class="img-wrap"> <img src="images/categories/4.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Read More Books</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Buy now</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> <!-- col // --><div class="col-md-3">
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>EMI on Debit Card</h4></div>
+        <div class="img-wrap"> <img src="images/categories/5.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Loan up to Rs 1 Lakh</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Check Eligibility</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> <!-- col // --><div class="col-md-3">
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>Mobile Prepaid Recharges</h4></div>
+        <div class="img-wrap"> <img src="images/categories/6.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Up to ₹50 back</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Recharge Now</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> <!-- col // --><div class="col-md-3">
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>All-New Kindle Paperwhite</h4></div>
+        <div class="img-wrap"> <img src="images/categories/7.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Thinner, Lighter, Waterproof with 2X Storage - At ₹12,999</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Shop Now</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> <!-- col // --><div class="col-md-3">
+   
+   
+    <figure class=" card card-product">
+    <div class="card-header bg-white"><h4>New On Prime Video</h4></div>
+        <div class="img-wrap"> <img src="images/categories/8.png"></div>
+        <figcaption class="info-wrap">
+            <small>*Redirects to PrimeVideo.com</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Join Prime To watch</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
 </div> <!-- col // -->
 <!-- col // -->
-</div> <!-- row.// --> 
-
-
+</div> <!-- row.// -->
+ 
+ 
 </div><!-- container // -->
 </section>
 <!-- ========================= SECTION ITEMS .END// ========================= -->
+<section class="section-main bg padding-y-sm">
+<div class="container">
+<div class="card">
+    <div class="card-header bg-white">Today's Deals <a href="404.html"><small>See All Details</small></a></div>
+    <div class="card-body">
+<div class="row row-sm">
+   
+    <div class="col-md-12">
+ 
+<!-- ================= main slide ================= -->
+<div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
+    <div class="item-slide">
+        <img src="images/products/1.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/2.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/3.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/4.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/5.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/6.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/7.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/8.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+   
+</div>
+<!-- ============== main slidesow .end // ============= -->
+ 
+    </div> <!-- col.// -->
+</div> <!-- row.// -->
+    </div> <!-- card-body .// -->
+</div> <!-- card.// -->
+ 
+ 
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION RECCOMENDATIONS .END// =============== -->
+ 
 <!-- ========================= SECTION RECCOMENDATIONS ====================== -->
 <section class="section-main bg padding-y-sm">
 <div class="container">
 <div class="card">
-	<div class="card-header bg-white">Today's Deals <a href="#"><small>See All Details</small></a></div>
-	<div class="card-body">
+    <div class="card-header bg-white">Inspired by your browsing history</div>
+    <div class="card-body">
 <div class="row row-sm">
-	
-	<div class="col-md-12">
-
+   
+    <div class="col-md-12">
+ 
 <!-- ================= main slide ================= -->
 <div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide3.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
+    <div class="item-slide">
+        <img src="images/products/1.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/2.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/3.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/4.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/5.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/6.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/7.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/8.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+   
 </div>
 <!-- ============== main slidesow .end // ============= -->
-
-	</div> <!-- col.// -->
+ 
+    </div> <!-- col.// -->
 </div> <!-- row.// -->
-	</div> <!-- card-body .// -->
+    </div> <!-- card-body .// -->
 </div> <!-- card.// -->
-
-
+ 
+ 
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION RECCOMENDATIONS .END// =============== -->
-
+ 
 <!-- ========================= SECTION RECCOMENDATIONS ====================== -->
 <section class="section-main bg padding-y-sm">
 <div class="container">
 <div class="card">
-	<div class="card-header bg-white">Inspired by your browsing history</div>
-	<div class="card-body">
+    <div class="card-header bg-white">Related to Items You Viewed</div>
+    <div class="card-body">
 <div class="row row-sm">
-	
-	<div class="col-md-12">
-
+   
+    <div class="col-md-12">
+ 
 <!-- ================= main slide ================= -->
 <div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide3.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
+    <div class="item-slide">
+        <img src="images/products/1.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/2.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/3.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/4.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/5.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/6.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/7.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/8.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+   
 </div>
 <!-- ============== main slidesow .end // ============= -->
-
-	</div> <!-- col.// -->
+ 
+    </div> <!-- col.// -->
 </div> <!-- row.// -->
-	</div> <!-- card-body .// -->
+    </div> <!-- card-body .// -->
 </div> <!-- card.// -->
-
-
+ 
+ 
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION RECCOMENDATIONS .END// =============== -->
-
+ 
+ 
 <!-- ========================= SECTION RECCOMENDATIONS ====================== -->
 <section class="section-main bg padding-y-sm">
 <div class="container">
 <div class="card">
-	<div class="card-header bg-white">Related to Items You Viewed</div>
-	<div class="card-body">
+    <div class="card-header bg-white">Inspired by wishlist</div>
+    <div class="card-body">
 <div class="row row-sm">
-	
-	<div class="col-md-12">
-
+   
+    <div class="col-md-12">
+ 
 <!-- ================= main slide ================= -->
 <div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide3.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
+    <div class="item-slide">
+        <img src="images/products/1.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+       
+    </div>
+    <div class="item-slide">
+        <img src="images/products/2.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/3.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/4.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/5.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/6.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/7.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+    <div class="item-slide">
+        <img src="images/products/8.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
+    </div>
+   
 </div>
 <!-- ============== main slidesow .end // ============= -->
-
-	</div> <!-- col.// -->
+ 
+    </div> <!-- col.// -->
 </div> <!-- row.// -->
-	</div> <!-- card-body .// -->
+    </div> <!-- card-body .// -->
 </div> <!-- card.// -->
-
-
+ 
+ 
 </div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION RECCOMENDATIONS .END// =============== -->
-
-
-<!-- ========================= SECTION RECCOMENDATIONS ====================== -->
-<section class="section-main bg padding-y-sm">
-<div class="container">
-<div class="card">
-	<div class="card-header bg-white">Inspired by wishlist</div>
-	<div class="card-body">
-<div class="row row-sm">
-	
-	<div class="col-md-12">
-
-<!-- ================= main slide ================= -->
-<div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide3.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide1.jpg">
-	</div>
-	<div class="item-slide">
-		<img src="images/banners/slide2.jpg">
-	</div>
-</div>
-<!-- ============== main slidesow .end // ============= -->
-
-	</div> <!-- col.// -->
-</div> <!-- row.// -->
-	</div> <!-- card-body .// -->
-</div> <!-- card.// -->
-
-
-</div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION RECCOMENDATIONS .END// =============== -->
-
+ 
 
 <!-- ========================= FOOTER ========================= -->
 <footer class="section-footer background-amazon">
@@ -571,11 +663,11 @@ $.get(api , function(data, status){
 				<aside class="col-sm-3  col-md-3 white">
 					<h5 class="title">My Account</h5>
 					<ul class="list-unstyled">
-						<li> <a href="#"> User Login </a></li>
-						<li> <a href="#"> User register </a></li>
-						<li> <a href="#"> Account Setting </a></li>
-						<li> <a href="#"> My Orders </a></li>
-						<li> <a href="#"> My Wishlist </a></li>
+						<li> <a href="404.html"> User Login </a></li>
+						<li> <a href="404.html"> User register </a></li>
+						<li> <a href="404.html"> Account Setting </a></li>
+						<li> <a href="404.html"> My Orders </a></li>
+						<li> <a href="404.html"> My Wishlist </a></li>
 					</ul>
 				</aside>
 				
@@ -588,10 +680,10 @@ $.get(api , function(data, status){
 						</p>
 
 						 <div class="btn-group white">
-						    <a class="btn btn-facebook" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook-f  fa-fw"></i></a>
-						    <a class="btn btn-instagram" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram  fa-fw"></i></a>
-						    <a class="btn btn-youtube" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube  fa-fw"></i></a>
-						    <a class="btn btn-twitter" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter  fa-fw"></i></a>
+						    <a class="btn btn-facebook" title="Facebook" target="_blank" href="404.html"><i class="fab fa-facebook-f  fa-fw"></i></a>
+						    <a class="btn btn-instagram" title="Instagram" target="_blank" href="404.html"><i class="fab fa-instagram  fa-fw"></i></a>
+						    <a class="btn btn-youtube" title="Youtube" target="_blank" href="404.html"><i class="fab fa-youtube  fa-fw"></i></a>
+						    <a class="btn btn-twitter" title="Twitter" target="_blank" href="404.html"><i class="fab fa-twitter  fa-fw"></i></a>
 						</div>
 					</article>
 				</aside>

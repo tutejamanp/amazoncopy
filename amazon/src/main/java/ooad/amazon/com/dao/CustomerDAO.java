@@ -10,18 +10,31 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import ooad.amazon.com.bean.Customer;
+import ooad.amazon.com.bean.User;
 import ooad.amazon.com.resources.CommonSessionFactory;
 
 public class CustomerDAO {
 	
-	public static void registercustomer (Customer cust) {
+	public static int registercustomer (Customer cust) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
 		ses.beginTransaction();
 		ses.save(cust);
 		ses.getTransaction().commit();
-		ses.close();		
+		ses.close();
 		
+		return 1;
+	} 
+	
+	public static Customer getcustomerbyemailid (String emailid) {
+		
+		Session ses = CommonSessionFactory.sf.openSession();
+		System.out.println("select * from customer where id in (select id from user where emailid = "+"'"+emailid+"' )");
+		List<User> lus = ses.createNativeQuery("select id from user where emailid = "+"'"+emailid+"'",User.class).list();
+		int id = lus.get(0).getId();
+		List<Customer> lcust  = (List<Customer>) ses.createNativeQuery("select * from customer where id = "+id,Customer.class).list();
+		ses.close();
+		return (Customer)lcust.get(0);
 	} 
 	
 	
