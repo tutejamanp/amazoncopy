@@ -1,5 +1,9 @@
 package ooad.amazon.com.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +23,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import ooad.amazon.com.bean.Category;
 import ooad.amazon.com.bean.Customer;
@@ -72,12 +79,30 @@ public class ProductController {
 
 	 @POST 
 		@Path("/saveproduct/{seller_id}")
-		@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
 		public Response registercus(
-				@FormParam("productname") String productname,
-				@FormParam("description") String description,@FormParam("category") String category,@FormParam("subcategory") String subcategory,
-				@FormParam("price") int price,@FormParam("discountedprice") int discountedprice
+				@FormDataParam("addImageSelect") InputStream uploadedInputStream,
+				@FormDataParam("addImageSelect") FormDataContentDisposition fileDetail,
+				@FormDataParam("productname") String productname,
+				@FormDataParam("description") String description,
+				@FormDataParam("category") String category,
+				@FormDataParam("subcategory") String subcategory,
+				@FormDataParam("price") int price,
+				@FormDataParam("discountedprice") int discountedprice
 				, @PathParam("seller_id") int seller_id){
+			
+		
+		 
+		 //String uploadedFileLocation = "C:\\Users\\Rikki\\eclipse-workspace\\student-management-system\\src\\main\\webapp\\imageData\\" + roll + "." +  fileDetail.getFileName().split("\\.")[1];
+		 String uploadedFileLocation = "C:\\Users\\Manpreet\\eclipse-workspace\\amazon.com\\src\\main\\webapp\\images\\products\\" + productname + "." +  fileDetail.getFileName().split("\\.")[1];
+		 //String uploadedFileLocation = "D:\\pics"  + productname + "." +  fileDetail.getFileName().split("\\.")[1];;
+		 
+		 String storeUrl = "images/products/" +  productname + "." +  fileDetail.getFileName().split("\\.")[1];
+		//	st.setPicUrl(storeUrl);
+		 
+		 System.out.println("file details" + fileDetail.toString() + " -- " + storeUrl + " -- " + uploadedFileLocation);
+		 
+			writeToFile(uploadedInputStream, uploadedFileLocation);
 			
 			Product prod = new Product();
 			prod.setPrice(price);
@@ -100,7 +125,7 @@ public class ProductController {
 		    
 		    
 		    ProductImages pi1 = new ProductImages();
-		    pi1.setUrl("");
+		    pi1.setUrl(storeUrl);
 		    
 		    List<ProductImages> npi = new ArrayList<ProductImages>();
 		    npi.add(pi1);
@@ -124,7 +149,27 @@ public class ProductController {
 	 
 	 
 	 
-	 
+	 private void writeToFile(InputStream uploadedInputStream,
+				String uploadedFileLocation) {
+				try {
+					OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
+					int read = 0;
+					byte[] bytes = new byte[1024];
+
+					out = new FileOutputStream(new File(uploadedFileLocation));
+					while ((read = uploadedInputStream.read(bytes)) != -1) {
+						out.write(bytes, 0, read);
+					}
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					System.out.println("Exception "+e);
+					//e.printStackTrace();
+				}
+
+			}
+
+		
 	
 
 }

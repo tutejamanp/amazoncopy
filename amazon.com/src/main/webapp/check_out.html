@@ -37,7 +37,35 @@
 <script src="js/scripts/cartManagement.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
 	$(document).ready(function() {
+		
+		var udata = JSON.parse(localStorage.getItem("userdata"));
+		var is_birthday = false;
+
+		if(udata == null) {
+			$('#nameText').text("Hello, Sign In");
+			//$('#deliverTo').text("");
+			//$('#myAmazon').text("Your Amazon");m
+		} else {
+			$('#nameText').text("Hello, " + udata.fname);
+			$('#deliverTo').text("Deliver To, " + udata.fname);
+			$('#myAmazon').text(udata.fname+"'s Amazon");
+			$('#signInButton').hide();
+			var responsebirthdate = new Date(udata.dob);
+			var currentdate = new Date ();
+			console.log(responsebirthdate);
+			console.log(currentdate);
+			console.log(currentdate.getMonth());
+			console.log(responsebirthdate.getMonth());
+			console.log(currentdate.getDate());
+			console.log(responsebirthdate.getDate());
+			if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){
+			console.log("happy birthday");
+			is_birthday = true;
+			}
+		}
+		
 		displayCart();
 	});
 </script>
@@ -91,18 +119,14 @@
 	<div class="col-lg-7-24 col-sm-3">
 	<div class="row">
 		<div class="col-sm-6"><i class="fas fa-map-marker-alt"></i>
-			<small>Deliver To Tushar</small></br>
+			<small id="deliverTo">Deliver Here</small></br>
 			<b>Bengaluru 560010</b>
 		</div>
 		<div class="col-sm-5 category-wrap dropdown py-1">
 		<button type="button" class="btn background-amazon  dropdown-toggle" data-toggle="dropdown" ><b> Shop By Categories</b></button>
 		<div class="dropdown-menu">
-			<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
-			<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
-			<a class="dropdown-item" href="#">Auto / Transportation</a>
-			<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
-			<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
-			<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a> 
+			<a id="Skin Care" class="dropdown-item" href="search.html" onclick="setCategory(this.id);" >Skin Care </a>
+			<a class="dropdown-item" href="404.html">Hair and Others </a>  
 		</div>
 	</div>
 	</div>
@@ -110,7 +134,7 @@
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		<a class="text-light" href="#">Buy Again</a> <a  class="text-light" href="#">Tushar's Amazon</a> <a  class="text-light" href="#">Today's Deals</a> <a class="text-light" href="#">Amazon Pay</a> <a class="text-light" href="#">Sell</a> <a class="text-light" href="#">Customer Service</a>	 <!-- search-wrap .end// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	
 	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
@@ -120,7 +144,7 @@
 					<div class="icontext">
 						
 						<div class="text-wrap text-light">
-							<small>Hello, Tushar<br/><b> Your Orders</b>
+								<small> <div id="nameText">Hello, Sign In</div><b> Your Orders</b>
 							<i class="fa fa-caret-down"></i> </small>	
 						</div>
 					</div>
@@ -235,7 +259,7 @@
 </figure>
 
 <div class="form-group">
-        <button type="submit" class="btn btn-warning btn-block"> Buy Now  </button>
+        <a href="payment.html"><button type="submit" class="btn btn-warning btn-block"> Buy Now  </button></a>
     </div>
 	</aside> <!-- col.// -->
 </div>

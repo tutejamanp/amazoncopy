@@ -105,6 +105,7 @@ $.get(api , function(data, status){
 		{
 		if(i == 0) {
 			var myString = myString+ "<div class='item-slide'>		<img src='http://localhost:8055/amazon.com/"+data[i].url+"'>		</div>";
+			console.log(myString);
 
 		} else {
 			var myString = myString+ "<div class='item-slide'>		<img style='display:none' src='http://localhost:8055/amazon.com/"+data[i].url+"'>		</div>";
@@ -116,8 +117,12 @@ $.get(api , function(data, status){
 		console.log("ssup bcdo");
 		var myString =  myString+ "<div class='item-slide'>		<img style='display:none' src='images/advertisments/birthday.jpg'>	</div>";
 		imgNum = data.length + 1;
+		$('#notbdayDisplay').hide();
+		$('#bdayDisplay').show();
 	}else{
 		imgNum = data.length;
+		$('#notbdayDisplay').show();
+		$('#bdayDisplay').hide();
 	}
 	console.log("no of adverts" + imgNum);
 	$('#myAdverts').html(myString+"");
@@ -196,7 +201,7 @@ $.get(api , function(data, status){
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="404.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">
@@ -279,7 +284,7 @@ $.get(api , function(data, status){
 	 <!-- col.// -->
 	<div class="col-md-12">
 
-		<div class=" fadeImg"  id="myAdverts"></div>
+		<div class=" fadeImg"  id="myAdverts" onclick=""></div>
 
 
 <!-- ================= main slide ================= -->
@@ -308,10 +313,28 @@ $.get(api , function(data, status){
 <section class="section-request bg padding-y-sm">
 <div class="container">
 <div class="row-sm">
-<div class="col-md-3">
+<div class="col-md-3" id="bdayDisplay">
    
    
-    <figure class=" card card-product">
+    <figure class=" card card-product" onclick="window.location.href='404.html';">
+    <div class="card-header bg-white"><h4>Special Birthday Offer</h4></div>
+        <div class="img-wrap"> <img src="http://localhost:8055/amazon.com/images/products/2.jpg"></div>
+        <figcaption class="info-wrap">
+            <small>Voice Control</small>
+           
+            <div class="price-wrap">
+                <small><a href="404.html">Explore all</a></small>
+            </div> <!-- price-wrap.// -->
+           
+        </figcaption>
+    </figure> <!-- card // -->
+   
+</div> 
+
+<div class="col-md-3" id="notbdayDisplay">
+   
+   
+    <figure class=" card card-product" onclick="window.location.href='404.html';">
     <div class="card-header bg-white"><h4>Meet The New Amazon Echo</h4></div>
         <div class="img-wrap"> <img src="http://localhost:8055/amazon.com/images/categories/1.jpg"></div>
         <figcaption class="info-wrap">
@@ -328,7 +351,7 @@ $.get(api , function(data, status){
 <div class="col-md-3">
    
    
-    <figure class=" card card-product">
+    <figure class=" card card-product" onclick="window.location.href='404.html';">
     <div class="card-header bg-white"><h4>Up to ₹1,500 back*</h4></div>
         <div class="img-wrap"> <img src="images/categories/2.jpg"></div>
         <figcaption class="info-wrap">
@@ -345,7 +368,7 @@ $.get(api , function(data, status){
 <div class="col-md-3">
    
    
-    <figure class=" card card-product">
+    <figure class=" card card-product" onclick="window.location.href='404.html';">
     <div class="card-header bg-white"><h4>Fire TV Stick</h4></div>
         <div class="img-wrap"> <img src="images/categories/3.jpg"></div>
         <figcaption class="info-wrap">
@@ -361,7 +384,7 @@ $.get(api , function(data, status){
 </div> <!-- col // --><div class="col-md-3">
    
    
-    <figure class=" card card-product">
+    <figure class=" card card-product" onclick="window.location.href='404.html';">
     <div class="card-header bg-white"><h4>Get Amazon Kindle</h4></div>
         <div class="img-wrap"> <img src="images/categories/4.jpg"></div>
         <figcaption class="info-wrap">
