@@ -38,7 +38,36 @@ $(document).ready(function(){
 		is_birthday = true;
 		}
 	}
+	
+	
+	var api;
+	api = "http://localhost:8055/amazon.com/webapi/CategoryController/categories/0";
+
+
+	$.get(api , function(data, status){
+
+	    var myString="";
+	   myString = myString + "<option selected='default'> Select Category</option>";
+			
+	    for(var i = 0; i < data.length; i++)
+		{
+	    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
+	    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
+	    	 myString=myString+"<option value = '"+ data[i].cat_id +"'>"+ data[i].categoryname +"</option>";
+		}
+	   
+	    //alert(""+myString);
+	    
+	    $('#category').html(myString);
+	   // $('#addsupid').text(0);
+
+			});
+
 });
+
+
+
+
 
 </script>
 
@@ -265,14 +294,14 @@ $(document).ready(function(){
 		</select>
 	</div> <!-- form-group end.// -->
 	
-	<div class="form-group input-group">
+	<!-- <div class="form-group input-group">
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-building"></i> </span>
 		</div>
 		<select id="subcategory" name="subcategory" class="form-control">	
    			 <option value="" disabled selected>Select</option>
 		</select>
-	</div> <!-- form-group end.// -->
+	</div> form-group end.// -->
 	
 	  		<textarea class="form-control" name="description" rows="5" id="description" placeholder="Description"></textarea>
 	<br/>

@@ -31,6 +31,7 @@ import ooad.amazon.com.bean.Category;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.ProductImages;
+import ooad.amazon.com.dao.CategoryDAO;
 import ooad.amazon.com.dao.CustomerDAO;
 import ooad.amazon.com.dao.ProductDAO;
 
@@ -85,8 +86,7 @@ public class ProductController {
 				@FormDataParam("addImageSelect") FormDataContentDisposition fileDetail,
 				@FormDataParam("productname") String productname,
 				@FormDataParam("description") String description,
-				@FormDataParam("category") String category,
-				@FormDataParam("subcategory") String subcategory,
+				@FormDataParam("category") int category,
 				@FormDataParam("price") int price,
 				@FormDataParam("discountedprice") int discountedprice
 				, @PathParam("seller_id") int seller_id){
@@ -99,7 +99,7 @@ public class ProductController {
 		 
 		 String storeUrl = "images/products/" +  productname + "." +  fileDetail.getFileName().split("\\.")[1];
 		//	st.setPicUrl(storeUrl);
-		 
+		 System.out.println("CAT ID: " + category);
 		 System.out.println("file details" + fileDetail.toString() + " -- " + storeUrl + " -- " + uploadedFileLocation);
 		 
 			writeToFile(uploadedInputStream, uploadedFileLocation);
@@ -110,16 +110,10 @@ public class ProductController {
 			prod.setProductname(productname);
 			prod.setDescription(description);
 
-		    Category cat1 = new Category ();
-		    cat1.setCategoryname(category);
-		    cat1.setLevelid(1);
-		    Category cat2 = new Category ();
-		    cat2.setCategoryname(subcategory);
-		    cat2.setLevelid(2);
-		    
+			Category cat = CategoryDAO.getCategorybyid(category);
+		
 		    List<Category> catlist = new ArrayList<Category>();
-		    catlist.add(cat1);
-		    catlist.add(cat2);
+		    catlist.add(cat); 
 		    
 		    prod.setCategorylist(catlist);
 		    
@@ -148,7 +142,6 @@ public class ProductController {
 		}
 	 
 	 
-	 
 	 private void writeToFile(InputStream uploadedInputStream,
 				String uploadedFileLocation) {
 				try {
@@ -168,8 +161,5 @@ public class ProductController {
 				}
 
 			}
-
-		
-	
 
 }

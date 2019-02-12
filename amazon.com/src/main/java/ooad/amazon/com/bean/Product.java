@@ -31,26 +31,41 @@ public class Product {
 	private int discountedprice;
 	private int quantityleft;
 	private String description;
-	private float starratings;
+	private float starratings = 0f;
+	private int totalreviews = 0;
 	
+	
+	
+	
+	public int getTotalreviews() {
+		return totalreviews;
+	}
+
+	public void setTotalreviews(int totalreviews) {
+		this.totalreviews = totalreviews;
+	}
+
 	@OneToMany
 	@JoinColumn(name="prodId")
 	List<ProductImages> product_images = new ArrayList<ProductImages>();
+	
+	@OneToMany
+	@JoinColumn(name="proId")
+	List<ProdReview> product_reviews = new ArrayList<ProdReview>();
+	
 	
 	public Product() {
 		super();
 	}
 
-	public Product(String productname, int price, int discountedprice, int quantityleft, String description,
-			float starratings) {
+	public Product(String productname, int price, int discountedprice, int quantityleft, String description) {
 		super();
 		this.productname = productname;
 		this.price = price;
 		this.discountedprice = discountedprice;
 		this.quantityleft = quantityleft;
 		this.description = description;
-		this.starratings = starratings;
-	}
+			}
 
 	@ElementCollection
     @GenericGenerator(name="categoryGenerator",strategy="sequence")
@@ -135,6 +150,14 @@ public class Product {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<ProdReview> getProduct_reviews() {
+		return product_reviews;
+	}
+
+	public void setProduct_reviews(List<ProdReview> product_reviews) {
+		this.product_reviews = product_reviews;
 	}
 
 	@Override

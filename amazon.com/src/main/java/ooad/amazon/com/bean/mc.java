@@ -19,6 +19,44 @@ public class mc {
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();
 		Session ses = sf.openSession();
 		ses.beginTransaction();
+		
+		Product prod22 = new Product("Popye papaya", 33, 15, 22, "ice cream");
+		prod22.setTotalreviews(0);
+		
+		Category cat13 = new Category("Icecream ");
+	
+		List<Category> catl111 = prod22.getCategorylist();
+		catl111.add(cat13);
+		
+		
+		prod22.setCategorylist(catl111);
+
+		ProdReview re = new ProdReview();
+		
+		re.setRating(4.6f);
+		re.setDescription("ek tarfa ");
+		re.setHeadline("wassup");
+		
+		List<ProdReview> revlist = prod22.getProduct_reviews();
+		//List<Category> revlist = prod22.getCategorylist();
+		
+		revlist.add(re);
+
+		ses.save(prod22);
+		ses.save(re);
+		
+		
+			
+		
+		//ses.save(prod22);
+		
+
+
+		
+		
+		
+		
+		
 
 		/*Advertisment ad1 = new Advertisment ();
 		ad1.setUrl("images/advertisments/c4.jpg");
@@ -90,14 +128,21 @@ public class mc {
 //		cardli.add(card);
 //		fs.setCardlist(cardli);
 //
-		Product prod1 = new Product("Lakme", 20, 15, 10, "a fairness cream", 4.5f);
-		Product prod2 = new Product("Garnier", 30, 14, 20, "a cream", 4.2f);
-		Product prod3 = new Product("Loreal", 40, 17, 10, "not a cream", 4.3f);
+		Product prod1 = new Product("Lakme", 20, 15, 10, "a fairness cream");
+		Product prod2 = new Product("Garnier", 30, 14, 20, "a cream");
+		Product prod3 = new Product("Loreal", 40, 17, 10, "not a cream");
 
-		Category cat = new Category("Skin Care", 1);
-		Category cat1 = new Category("Garnier", 2);
-		Category cat2 = new Category("Hair and Others", 1);
-
+		Category cat = new Category("Skin Care");
+		Category cat1 = new Category("Garnier");
+		cat1.setSuper_cat(cat);
+		Category cat2 = new Category("Hair and Others");
+		Category cat3 = new Category("Sunblock");
+		cat3.setSuper_cat(cat1);
+		Category cat4 = new Category("SPF15");
+		cat4.setSuper_cat(cat3);
+		Category cat5 = new Category("SPA+++");
+		cat5.setSuper_cat(cat1);
+		
 		List<Category> catl = prod1.getCategorylist();
 		catl.add(cat);
 		prod1.setCategorylist(catl);
@@ -110,6 +155,13 @@ public class mc {
 		List<Category> catl2 = prod3.getCategorylist();
 		catl2.add(cat2);
 		prod3.setCategorylist(catl2);
+		
+		ses.save(cat1);
+		ses.save(cat2);
+		ses.save(cat);
+		ses.save(cat3);
+		ses.save(cat4);
+		ses.save(cat5);
 
 		ses.save(prod1);
 		ses.save(prod2);

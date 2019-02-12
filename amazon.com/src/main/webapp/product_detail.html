@@ -32,6 +32,7 @@
 <link href="css/ui.css" rel="stylesheet" type="text/css"/>
 <link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 <link href="css/custom.css" rel="stylesheet"  />
+<link href="css/review_product.css" rel="stylesheet"  />
 
 <!-- custom javascript -->
 <script src="js/ajax/viewProduct.js" type="text/javascript" defer></script>
@@ -40,7 +41,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	viewProduct();
-	
+	displayComments();
 
 
 		var udata = JSON.parse(localStorage.getItem("userdata"));
@@ -262,22 +263,10 @@ function addcheckoutitems() {
   <dd><p id="description">Loading... </p></dd>
 </dl>
 
-<div class="rating-wrap">
+<div class="rating-wrap" id="productRating">
 
-	<ul class="rating-stars">
-		<li style="width:80%" class="stars-active"> 
-			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-			<i class="fa fa-star"></i> 
-		</li>
-		<li>
-			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-			<i class="fa fa-star"></i> 
-		</li>
-	</ul>
-	<div class="label-rating">132 reviews</div>
-	<div class="label-rating">154 orders </div>
+	
+	
 </div> <!-- rating-wrap.// -->
 <hr>
 	<div class="row">
@@ -296,12 +285,25 @@ function addcheckoutitems() {
 	<hr>
 	<div id="product_hidden"></div>
 	<a href="#" class="btn  btn-warning"  onclick="addcheckoutitems();" > Buy now </a>
-	<a href="#" class="btn  btn-outline-warning"> <i class="fas fa-shopping-cart"></i> Add to cart </a>
+	<a href="#" class="btn  btn-outline-warning"> <i class="fas fa-shopping-cart"></i> Add to cart </a><hr/>
+	<a href="leave_review.html" class="btn  btn-success" id="feedbackButton">  Leave Feedback </a>
 
 <!-- short-info-wrap .// -->
 </article> <!-- card-body.// -->
+
+
 		</aside> <!-- col.// -->
+		
 	</div> <!-- row.// -->
+	<div class="container">
+    			
+		<div class="row" id="myComments">
+		
+			
+		</div>
+		
+    </div> <!-- /container -->	
+	
 </main> <!-- card.// -->
 
 <!-- PRODUCT DETAIL -->
@@ -356,6 +358,10 @@ function addcheckoutitems() {
 
 </div> <!-- container .//  -->
 </section>
+
+
+<!-- ========================= PRODUCT REVIEW ============================= -->
+
 <!-- ========================= SECTION MAIN END// ========================= -->
 
 <!-- ========================= SECTION SUBSCRIBE ========================= -->
@@ -424,6 +430,7 @@ function addcheckoutitems() {
 </footer>
 <!-- ========================= FOOTER END // ========================= -->
 
+<script src="js/ajax/display_review.js" type="text/javascript"></script>
 
 </body>
 

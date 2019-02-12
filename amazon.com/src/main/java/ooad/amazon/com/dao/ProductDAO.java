@@ -21,6 +21,7 @@ public class ProductDAO {
 		for(Product p: prodlist)
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategorylist());
+		Hibernate.initialize(p.getProduct_reviews());
 		}
 		ses.close();
 		
@@ -34,6 +35,7 @@ public class ProductDAO {
 		for(Product p: prodlist)
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategorylist());
+		Hibernate.initialize(p.getProduct_reviews());
 		System.out.println(p.toString());
 		}
 		ses.close();
@@ -49,6 +51,7 @@ public class ProductDAO {
 		for(Product p: prodlist)
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategorylist());
+		Hibernate.initialize(p.getProduct_reviews());		
 		System.out.println(p.toString());
 		}
 		ses.close();

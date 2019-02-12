@@ -26,7 +26,7 @@ var mealsByCategory = {
 	            for (categoryId in mealsByCategory[value]) {
 	                catOptions += "<option>" + mealsByCategory[value][categoryId] + "</option>";
 	            }
-	            document.getElementById("subcategory").innerHTML = catOptions;
+	            //document.getElementById("subcategory").innerHTML = catOptions;
 	        }
 	    }
 
