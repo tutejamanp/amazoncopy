@@ -41,6 +41,9 @@ public class CategoryDAO {
 		Category cat = new Category();
 		List<Category> sup_cat_list;
 		//sup_cat.
+		
+		System.out.println("super cat id is : "+sup_id);
+		
 		sup_cat_list = ses.createNativeQuery("select * from Category where cat_id ="+sup_id,Category.class).list();
 		
 		Category sup_cat = sup_cat_list.get(0);

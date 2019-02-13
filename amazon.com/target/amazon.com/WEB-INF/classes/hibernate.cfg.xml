@@ -10,10 +10,10 @@
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.connection.pool_size">100</property>
         <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.show_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
 		<property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
-		<property name="hbm2ddl.auto">update</property>
+		<property name="hbm2ddl.auto">create</property>
 
         <mapping class="ooad.amazon.com.bean.User" />
         <mapping class="ooad.amazon.com.bean.Customer" />
@@ -22,6 +22,9 @@
         <mapping class="ooad.amazon.com.bean.Order" />
         <mapping class="ooad.amazon.com.bean.ProductImages" />
     	<mapping class="ooad.amazon.com.bean.Advertisment" />
+    	<mapping class="ooad.amazon.com.bean.ProdReview" />
+    	<mapping class="ooad.amazon.com.bean.Category" />
+    	<mapping class="ooad.amazon.com.bean.Admin" />
     
     </session-factory>
 </hibernate-configuration>

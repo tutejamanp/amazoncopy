@@ -17,12 +17,32 @@ public class AdvertisementDAO {
 	
 	public static List<Advertisment> getAllAdvertisments() {
 		Session ses = CommonSessionFactory.sf.openSession();
-		List<Advertisment> adlist = ses.createNativeQuery("select * from advertisment",Advertisment.class).list();
+		List<Advertisment> adlist = ses.createNativeQuery("select * from Advertisment where is_active='Y'",Advertisment.class).list();
 		ses.close();
 		return adlist;
 		
 	}
 	
+	public static int addAdvertisment(Advertisment ad) {
+		
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		Integer id = (Integer) ses.save(ad);
+		ses.getTransaction().commit();
+		ses.close();
+		return id;
+	}
+	
+	public static int deleteAdvertisment (int ad) {
+		
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		List<Advertisment> adlist = ses.createNativeQuery("select * from Advertisment where id = "+ ad ,Advertisment.class).list();
+		ses.delete(adlist.get(0));
+		ses.getTransaction().commit();
+		ses.close();
+		return 0;
+	}
 	
 	
 }

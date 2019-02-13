@@ -9,16 +9,19 @@
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>ooad.amazon.com</param-value>
     </init-param>
-    <load-on-startup>1</load-on-startup>
+    <init-param>
+    <param-name>jersey.config.server.provider.classnames</param-name>
+    <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+   </init-param>
+    <load-on-startup>100</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>Jersey Web Application</servlet-name>
     <url-pattern>/webapi/*</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
-  <welcome-file>
- index.jsp
+    <welcome-file>
+ home.jsp
   </welcome-file>
   </welcome-file-list>
-  
 </web-app>
