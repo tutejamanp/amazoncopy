@@ -8,11 +8,23 @@ function displayCart(){
 		$.get(api , function(data, status){
 		    product = data[0];
 		    console.log(product);
-		    $('#cartItems').append(generateItem(product.product_images[0].url, product.productname, product.id, localStorage.getItem("cartProductQty"), product.discountedprice));
-		    var discount = (product.price - product.discountedprice)*parseInt(localStorage.getItem("cartProductQty"));
+		    
+		    var udata = JSON.parse(localStorage.getItem("userdata"));
+
+		    var responsebirthdate = new Date(udata.dob);
+			var currentdate = new Date();
+			var discountedprice;
+			if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){
+				discountedprice = product.bdayprice;
+			}else{
+				discountedprice = product.discountedprice;
+			}
+		    
+		    $('#cartItems').append(generateItem(product.product_images[0].url, product.productname, product.id, localStorage.getItem("cartProductQty"), discountedprice));
+		    var discount = (product.price - discountedprice)*parseInt(localStorage.getItem("cartProductQty"));
 		    
 		    $('#discount').html(discount);
-		    $('#price').html(product.discountedprice*localStorage.getItem("cartProductQty"));
+		    $('#price').html(discountedprice*localStorage.getItem("cartProductQty"));
 		});
 		
 	} else {

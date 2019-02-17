@@ -25,11 +25,11 @@ public class mc {
 		
 		Category cat13 = new Category("Icecream ");
 	
-		List<Category> catl111 = prod22.getCategorylist();
-		catl111.add(cat13);
+//		List<Category> catl111 = prod22.getCategory();
+		//catl111.add(cat13);
 		
 		
-		prod22.setCategorylist(catl111);
+	//	prod22.setCategorylist(catl111);
 
 		ProdReview re = new ProdReview();
 		
@@ -143,18 +143,18 @@ public class mc {
 		Category cat5 = new Category("SPA+++");
 		cat5.setSuper_cat(cat1);
 		
-		List<Category> catl = prod1.getCategorylist();
-		catl.add(cat);
-		prod1.setCategorylist(catl);
+		//List<Category> catl = prod1.getCategorylist();
+		//catl.add(cat);
+		//prod1.setCategorylist(catl);
 
-		List<Category> catl1 = prod2.getCategorylist();
-		catl1.add(cat);
-		catl1.add(cat1);
-		prod2.setCategorylist(catl1);
+		//List<Category> catl1 = prod2.getCategorylist();
+		//catl1.add(cat);
+		//catl1.add(cat1);
+		//prod2.setCategorylist(catl1);
 
-		List<Category> catl2 = prod3.getCategorylist();
-		catl2.add(cat2);
-		prod3.setCategorylist(catl2);
+		//List<Category> catl2 = prod3.getCategorylist();
+		//catl2.add(cat2);
+		//prod3.setCategorylist(catl2);
 		
 		ses.save(cat1);
 		ses.save(cat2);

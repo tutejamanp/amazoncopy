@@ -34,6 +34,7 @@
 
 <!-- custom javascript -->
 <script src="js/script.js" type="text/javascript"></script>
+<script src="js/scripts/viewProductDetail.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 
@@ -104,11 +105,11 @@ $.get(api , function(data, status){
 	for(i=0;i< data.length;i++)
 		{
 		if(i == 0) {
-			var myString = myString+ "<div class='item-slide'>		<img src='http://localhost:8055/amazon.com/"+data[i].url+"'>		</div>";
+			var myString = myString+ "<div class='item-slide'>		<img src='http://localhost:8055/amazon.com/"+data[i].url+"' onclick= 'setCategory("+data[i].categorytoshow+");'>		</div>";
 			console.log(myString);
 
 		} else {
-			var myString = myString+ "<div class='item-slide'>		<img style='display:none' src='http://localhost:8055/amazon.com/"+data[i].url+"'>		</div>";
+			var myString = myString+ "<div class='item-slide'>		<img style='display:none' src='http://localhost:8055/amazon.com/"+data[i].url+"'  onclick= 'setCategory("+data[i].categorytoshow+");'>		</div>";
 	
 		}
 	
@@ -132,8 +133,69 @@ $.get(api , function(data, status){
 
 	nextFadeIn();
 });
+var api;
+api = "http://localhost:8055/amazon.com/webapi/ProductController/products";
+
+
+$.get(api , function(data, status){
+    data.forEach(function(product) {
+    	var items = "";
+    	var responsebirthdate = new Date(udata.dob);
+    	var currentdate = new Date ();
+    	
+    	if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){    	
+    		if(product.is_bdayproduct == true){
+        		items = "<div class='item-slide'><img src='"+product.product_images[0].url+"'  style='height: 50%; width: 50%; object-fit: contain' onclick=\"viewProductDetails('"+product.id+"');\"/></div>";	
+
+    		}
+   			$('#birth_header').text("Birthday Offer");
+    	} else if(product.is_bdayproduct == false){
+    		
+   			items = "<div class='item-slide'><img src='"+product.product_images[0].url+"'  style='height: 50%; width: 50%; object-fit: contain' onclick=\"viewProductDetails('"+product.id+"');\"/></div>";	
+    	}
+    	$('#birthday_products').append(items);
+    });
+});
+
+
+
+
+var api;
+api = "http://localhost:8055/amazon.com/webapi/CategoryController/allcategories";
+
+
+$.get(api , function(data, status){
+
+    var myString="";
+   //myString = myString + "<option selected='default'> Select Category</option>";
+		
+    for(var i = 0; i < data.length; i++)
+	{
+    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
+    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
+    	 myString=myString+"<option class='dropdown-item' value = '"+ data[i].cat_id +"' onclick= 'setCategory("+data[i].cat_id+");'>"+ data[i].categoryname +"</option>";
+		console.log(myString);
+	}
+   
+    //alert(""+myString);
+    
+    $('#shopbyCat').html(myString);
+   // $('#addsupid').text(0);
+
+		});
+
+
+
+
+
+
 
 });
+
+
+
+
+
 </script>
 
 </head>
@@ -191,7 +253,7 @@ $.get(api , function(data, status){
 		</div>
 		<div class="col-sm-5 category-wrap dropdown py-1">
 		<button type="button" class="btn background-amazon  dropdown-toggle" data-toggle="dropdown" ><b> Shop By Categories</b></button>
-		<div class="dropdown-menu" >
+		<div class="dropdown-menu" id="shopbyCat">
 			<a id="Skin Care" class="dropdown-item" href="search.html" onclick="setCategory(this.id);" >Skin Care </a>
 			<a class="dropdown-item" href="404.html">Hair and Others </a> 
 		</div>
@@ -201,7 +263,7 @@ $.get(api , function(data, status){
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="Bank.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="manage_sales.html">Customer Service</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">
@@ -472,40 +534,18 @@ $.get(api , function(data, status){
 <section class="section-main bg padding-y-sm">
 <div class="container">
 <div class="card">
-    <div class="card-header bg-white">Today's Deals <a href="404.html"><small>See All Details</small></a></div>
+    <div class="card-header bg-white" id="birth_header">Today's Deals <a href="404.html"><small>See All Details</small></a></div>
     <div class="card-body">
 <div class="row row-sm">
    
     <div class="col-md-12">
  
 <!-- ================= main slide ================= -->
-<div class="owl-init slider-main owl-carousel" data-items="4" data-nav="true" data-dots="false">
-    <div class="item-slide">
-        <img src="images/products/1.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/2.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/3.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/4.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/5.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/6.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/7.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
-    <div class="item-slide">
-        <img src="images/products/8.jpg"  style='height: 50%; width: 50%; object-fit: contain' />
-    </div>
+<div class="owl-init slider-main owl-carousel" id="birthday_products" data-items="4" data-nav="true" data-dots="false">
+    
+    
    
-</div>
+</div>	
 <!-- ============== main slidesow .end // ============= -->
  
     </div> <!-- col.// -->

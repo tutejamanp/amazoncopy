@@ -8,7 +8,16 @@ import javax.persistence.Id;
 @Entity
 public class Admin {
 	 @Id
-	 private String aName;
+	 @GeneratedValue(strategy=GenerationType.AUTO)
+     private int aid;
+	 
+	 public int getAid() {
+		return aid;
+	}
+	public void setAid(int aid) {
+		this.aid = aid;
+	}
+	private String aName;
 	 private String password;
 	 
 	public String getaName() {

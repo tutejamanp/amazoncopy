@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 
 import ooad.amazon.com.bean.User;
@@ -42,8 +43,13 @@ public class Register {
 		u.setContact_no(contact_no);
 		u.setPassword(password);
 		
+		Bank bankacc = new  Bank();
+		bankacc.setAmount(0);
+		bankacc.setAmzamount(0);
+		
+		u.setBank(bankacc);
 		//System.out.println(fname+" "+contact_no);
-		CustomerDAO.registercustomer(u);
+		CustomerDAO.registercustomer(u, bankacc);
 		return Response.ok(u);
 		
 	}

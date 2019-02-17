@@ -12,19 +12,35 @@ public class CategoryDAO {
 	public static List<Category> getAllSubCategories(int id) {
 		Session ses = CommonSessionFactory.sf.openSession();
 		List<Category> catList;
-		if(id == 0)
-		{
-			catList = ses.createNativeQuery("select * from Category where super_cat_id IS NULL",Category.class).list();
-		}
-		else
-		{
+		
 			catList = ses.createNativeQuery("select * from Category where super_cat_id="+id,Category.class).list();
-		}
+		
 		ses.close();
 		return catList;
 		
 	}
 	
+	
+	public static List<Category> getAllrootCategories() {
+		Session ses = CommonSessionFactory.sf.openSession();
+		List<Category> catList;
+		catList = ses.createNativeQuery("select * from Category where super_cat_id IS NULL",Category.class).list();
+		ses.close();
+		return catList;
+		
+	}
+	
+	
+	
+	
+	public static List<Category> getAllCategories() {
+		Session ses = CommonSessionFactory.sf.openSession();
+		List<Category> catList;
+		catList = ses.createNativeQuery("select * from Category ",Category.class).list();
+		ses.close();
+		return catList;
+		
+	}
 	
 	
 	public static Category getCategorybyid(int cat_id) {

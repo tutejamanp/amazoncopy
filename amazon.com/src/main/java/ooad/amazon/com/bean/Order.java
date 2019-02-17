@@ -26,7 +26,8 @@ public class Order {
 	}
 	private Date orderdate;
 	private int totalamount;
-	private String status;
+	private int buyerid;
+	
 	
 	@ElementCollection
     @GenericGenerator(name="itemGenerator",strategy="sequence")
@@ -61,18 +62,26 @@ public class Order {
 	public void setTotalamount(int totalamount) {
 		this.totalamount = totalamount;
 	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public Order(Date orderdate, int totalamount, String status) {
+	
+	public Order(Date orderdate, int totalamount) {
 		super();
 		this.orderdate = orderdate;
 		this.totalamount = totalamount;
-		this.status = status;
+		
 	}
+	public int getBuyerid() {
+		return buyerid;
+	}
+	public void setBuyerid(int buyerid) {
+		this.buyerid = buyerid;
+	}
+	@Override
+	public String toString() {
+		return "Order [orderid=" + orderid + ", orderdate=" + orderdate + ", totalamount=" + totalamount + ", buyerid="
+				+ buyerid + ", ordereditemlist=" + ordereditemlist + "]";
+	}
+	
+	
 	
 
 }

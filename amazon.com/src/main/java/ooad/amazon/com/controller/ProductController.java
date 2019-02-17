@@ -51,14 +51,14 @@ public class ProductController {
 		 
 	    }
 	
-	 @Path("/productsByCategory/{categoryname}")
+	 @Path("/productsByCategory/{categoryid}")
 	 @GET
 	 @Produces(MediaType.APPLICATION_JSON)
-	    public Response getProductsByCategory(@PathParam("categoryname") String categoryname) {
+	    public Response getProductsByCategory(@PathParam("categoryid") int categoryid) {
 
 		 GenericEntity<List<Product>> products;
 	
-		 products  = new GenericEntity<List<Product>>(ProductDAO.getProductsbyCategory(categoryname)) { };
+		 products  = new GenericEntity<List<Product>>(ProductDAO.getProductsbyCategory(categoryid)) { };
 		 return Response.ok(products).build();
 
 		 
@@ -112,10 +112,7 @@ public class ProductController {
 
 			Category cat = CategoryDAO.getCategorybyid(category);
 		
-		    List<Category> catlist = new ArrayList<Category>();
-		    catlist.add(cat); 
-		    
-		    prod.setCategorylist(catlist);
+		    prod.setCategory(cat);
 		    
 		    
 		    ProductImages pi1 = new ProductImages();
@@ -126,7 +123,7 @@ public class ProductController {
 		    
 		    prod.setProduct_images(npi);
 		    
-		    int resp = ProductDAO.addproduct(prod, catlist, npi);
+		    int resp = ProductDAO.addproduct(seller_id, prod, cat, npi);
 			
 			 if(resp >0)
 			 {
@@ -140,6 +137,40 @@ public class ProductController {
 			 }
 			
 		}
+	 
+	 
+	 
+
+	 @POST 
+		@Path("/updateproduct/{pid}")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response updateprd(
+				@FormDataParam("isbdayavil") int bdayavail,
+				@FormDataParam("bdayspprice") int bdayprice
+				, @PathParam("pid") int pid){
+			
+		
+		 
+		 System.out.println("bday avil is : "+bdayavail);
+		 System.out.println("bday price is : "+bdayprice);
+		 System.out.println("pid is : "+pid);
+		 
+		 int resp =  ProductDAO.updateproduct(pid , bdayprice , bdayavail);
+			
+			 if(resp >0)
+			 {
+				 String result = resp+"";
+				 return Response.status(201).entity(result).build();
+			 }
+			 else
+			 {
+				 String result = resp+"";
+				 return Response.status(404).entity(result).build();
+			 }
+			
+		}
+	 
+	 
 	 
 	 
 	 private void writeToFile(InputStream uploadedInputStream,

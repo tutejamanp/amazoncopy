@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.Fetch;
@@ -33,10 +34,40 @@ public class Product {
 	private String description;
 	private float starratings = 0f;
 	private int totalreviews = 0;
+	private int seller;
+	private int bdayprice;
+	private boolean is_bdayproduct;
 	
 	
 	
+	public int getBdayprice() {
+		return bdayprice;
+	}
+
+	public void setBdayprice(int bdayprice) {
+		this.bdayprice = bdayprice;
+	}
+
+	public boolean isIs_bdayproduct() {
+		return is_bdayproduct;
+	}
+
+	public void setIs_bdayproduct(boolean is_bdayproduct) {
+		this.is_bdayproduct = is_bdayproduct;
+	}
+
+	@OneToOne
+	private Category category;
 	
+	
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	public int getTotalreviews() {
 		return totalreviews;
 	}
@@ -66,15 +97,6 @@ public class Product {
 		this.quantityleft = quantityleft;
 		this.description = description;
 			}
-
-	@ElementCollection
-    @GenericGenerator(name="categoryGenerator",strategy="sequence")
-    @CollectionId(
-        columns=@Column(name="catid"),
-        type=@Type(type="long"),
-        generator="categoryGenerator"
-    )
-    private List<Category> categorylist = new ArrayList<Category>();
 
 	
 	public List<ProductImages> getProduct_images() {
@@ -106,6 +128,7 @@ public class Product {
 	}
 
 	public void setDiscountedprice(int discountedprice) {
+		this.bdayprice = discountedprice;
 		this.discountedprice = discountedprice;
 	}
 
@@ -133,16 +156,6 @@ public class Product {
 		this.starratings = starratings;
 	}
 	
-	
-	public List<Category> getCategorylist() {
-		return categorylist;
-	}
-
-	public void setCategorylist(List<Category> categorylist) {
-		this.categorylist = categorylist;
-	}
-	
-	
 
 	public int getId() {
 		return id;
@@ -164,8 +177,18 @@ public class Product {
 	public String toString() {
 		return "Product [id=" + id + ", productname=" + productname + ", price=" + price + ", discountedprice="
 				+ discountedprice + ", quantityleft=" + quantityleft + ", description=" + description + ", starratings="
-				+ starratings + ", product_images=" + product_images + ", categorylist=" + categorylist + "]";
+				+ starratings + ", totalreviews=" + totalreviews + ", seller=" + seller + ", product_images="
+				+ product_images + ", product_reviews=" + product_reviews + " ]";
 	}
+
+	public int getSeller() {
+		return seller;
+	}
+
+	public void setSeller(int seller) {
+		this.seller = seller;
+	}
+
 	
 
 	

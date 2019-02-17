@@ -38,7 +38,7 @@
 
 $(document).ready(function() {
 var api;
-api = "http://localhost:8055/amazon.com/webapi/CategoryController/categories/0";
+api = "http://localhost:8055/amazon.com/webapi/CategoryController/rootcategories";
 
 
 $.get(api , function(data, status){
@@ -154,6 +154,9 @@ function subcat(a)
 	$('#currentCat').append(myString);
 	$('#currentCat').append(" » ");
 	//alert(opt.text + " " + a.value);
+	
+	console.log("find subcategories for  : " +a.value );
+	
 	
 	api = "http://localhost:8055/amazon.com/webapi/CategoryController/categories/" + a.value;
 

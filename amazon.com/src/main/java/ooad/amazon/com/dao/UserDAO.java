@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import ooad.amazon.com.bean.Customer;
+import ooad.amazon.com.bean.Order;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.User;
 import ooad.amazon.com.resources.CommonSessionFactory;
@@ -39,6 +40,16 @@ public class UserDAO {
 					Hibernate.initialize(c.getCartlist());
 					Hibernate.initialize(c.getWishlist());
 					Hibernate.initialize(c.getOrderlist());
+					Hibernate.initialize(c.getProductlist());
+					for(Product p : c.getProductlist()) {
+						Hibernate.initialize(p.getProduct_images());
+						Hibernate.initialize(p.getProduct_reviews());
+						//Hibernate.initialize(p.getCategory());
+					}
+					
+					for(Order o: c.getOrderlist()) {
+						Hibernate.initialize(o.getOrdereditemlist());
+					}
 				}
 				
 				System.out.println(lcustomers.get(0).toString());

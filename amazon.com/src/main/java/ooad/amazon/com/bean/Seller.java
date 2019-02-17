@@ -38,10 +38,7 @@ public class Seller extends User {
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
-	@OneToMany
-	@JoinColumn(name="seller_id")
-    private List<Product> productlist = new ArrayList<Product>();
-	
+
 	public Seller() {
 		super();
 	}
@@ -55,12 +52,8 @@ public class Seller extends User {
 		this.rating = rating;
 		this.count_ratings = count_ratings;
 	}
-	public List<Product> getProductlist() {
-		return productlist;
-	}
-	public void setProductlist(List<Product> productlist) {
-		this.productlist = productlist;
-	}
+	
+	
 	public String getCompanyname() {
 		return companyname;
 	}

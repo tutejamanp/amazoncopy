@@ -10,19 +10,30 @@ public class OrderedItem {
 	private int quantity;
 	private int unitamount;
 	private int unitdiscountedamount;
+	private String status;
 	
 	public OrderedItem() {
 		super();
 	}
 	
-	public OrderedItem(int productid, int quantity, int unitamount, int unitdiscountedamount) {
+	public OrderedItem(int productid, int quantity, int unitamount, int unitdiscountedamount, String status) {
 		super();
 		this.productid = productid;
 		this.quantity = quantity;
 		this.unitamount = unitamount;
 		this.unitdiscountedamount = unitdiscountedamount;
+		this.status = status;
 	}
-	
+
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getProductid() {
 		return productid;
 	}
@@ -46,6 +57,12 @@ public class OrderedItem {
 	}
 	public void setUnitdiscountedamount(int unitdiscountedamount) {
 		this.unitdiscountedamount = unitdiscountedamount;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderedItem [productid=" + productid + ", quantity=" + quantity + ", unitamount=" + unitamount
+				+ ", unitdiscountedamount=" + unitdiscountedamount + ", status=" + status + "]";
 	}
 	
 	

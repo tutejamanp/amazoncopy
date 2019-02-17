@@ -34,6 +34,44 @@ public class CategoryController {
 		 return Response.ok(cats).build();
 	
 	    }
+	 
+	 
+	 @GET
+	 @Path("/rootcategories")
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response getrootCategories() {
+
+		 GenericEntity<List<Category>> cats;
+	
+		 cats  = new GenericEntity<List<Category>>( CategoryDAO.getAllrootCategories()) { };
+		
+		 return Response.ok(cats).build();
+	
+	    }
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 @GET
+	 @Path("/allcategories")
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response getallCategories() {
+
+		 GenericEntity<List<Category>> cats;
+	
+		 cats  = new GenericEntity<List<Category>>( CategoryDAO.getAllCategories()) { };
+		
+		 return Response.ok(cats).build();
+	
+	    }
+	 
+	 
+	 
+	 
 	
 	 @POST 
 		@Path("/addCategory")

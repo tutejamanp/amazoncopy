@@ -13,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,8 +34,16 @@ public class User {
 	private int is_customer;
 	private String profilePic;
 	
+	@OneToOne
+	private Bank bank;
 	
-	
+	@OneToMany
+	@JoinColumn(name="seller_id")
+	private List<Product> productlist = new ArrayList<Product>();
+		
+	@OneToMany
+	@JoinColumn(name="customer_id")
+	private List<Order> orderlist = new ArrayList<Order>();
 	
 	
     @Override
@@ -106,6 +117,25 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public Bank getBank() {
+		return bank;
+	}
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+	public List<Product> getProductlist() {
+		return productlist;
+	}
+	public void setProductlist(List<Product> productlist) {
+		this.productlist = productlist;
+	}
+	public List<Order> getOrderlist() {
+		return orderlist;
+	}
+	public void setOrderlist(List<Order> orderlist) {
+		this.orderlist = orderlist;
+	}
+	
 	
 	
 }

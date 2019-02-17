@@ -41,7 +41,7 @@ $(document).ready(function(){
 	
 	
 	var api;
-	api = "http://localhost:8055/amazon.com/webapi/CategoryController/categories/0";
+	api = "http://localhost:8055/amazon.com/webapi/CategoryController/allcategories";
 
 
 	$.get(api , function(data, status){
@@ -63,10 +63,23 @@ $(document).ready(function(){
 
 			});
 
+	
 });
 
 
+function updatediscpercentfield(price){
+	var actprice = document.getElementById("price").value;
+	//console.log(price + "-" + globaldiscountedprice);
+	document.getElementById("discountedpercent").value = ((actprice -price)/actprice) * 100;
+	
+}
 
+function updatediscpricefield(disc){
+	var price = document.getElementById("price").value;
+	//console.log(price + "+" + disc);
+	document.getElementById("discountedprice").value = price - ((disc*price)/100);
+	
+}
 
 
 </script>
@@ -277,7 +290,8 @@ $(document).ready(function(){
     	<div class="input-group-prepend">
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		</div>
-        <input name="discountedprice" class="form-control" placeholder="Discounted Price" type="number" id="discountedprice">
+        <input name="discountedprice" class="form-control" placeholder="Discounted Price" type="number" id="discountedprice"  onchange="updatediscpercentfield(this.value)" >
+        <input name="discountedpercent" class="form-control" placeholder="Discount Percent" type="number" id="discountedpercent" onchange="updatediscpricefield(this.value)">
     </div>
      <!-- form-group// -->                                      
     <!-- form-group// -->   

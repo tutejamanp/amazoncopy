@@ -5,25 +5,37 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.User;
 import ooad.amazon.com.resources.CommonSessionFactory;
 
 public class CustomerDAO {
 	
-	public static int registercustomer (Customer cust) {
+	public static int registercustomer (Customer cust, Bank bankacc) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
 		ses.beginTransaction();
+		Query query = ses.createQuery("from User where emailid = "+"'"+cust.getEmailid()+"'");
+		List<User> lusers  = (List<User>) query.list(); 
+		
+		
+		//Customer cu = getcustomerbyemailid(cust.getEmailid());
+		if(lusers.size()==0) {
+		ses.save(bankacc);
 		ses.save(cust);
 		ses.getTransaction().commit();
 		ses.close();
-		
 		return 1;
+		}
+		else {
+			return 0;
+		}
 	} 
 	
 	public static Customer getcustomerbyemailid (String emailid) {
@@ -34,7 +46,10 @@ public class CustomerDAO {
 		int id = lus.get(0).getId();
 		List<Customer> lcust  = (List<Customer>) ses.createNativeQuery("select * from customer where id = "+id,Customer.class).list();
 		ses.close();
+		if(lcust.size() > 0)
 		return (Customer)lcust.get(0);
+		else
+			return null;
 	} 
 	
 	

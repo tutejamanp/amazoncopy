@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.dao.CustomerDAO;
@@ -83,9 +84,17 @@ public class UserController {
 		
 		cus.setDob(date);
 		
-		 int resp = CustomerDAO.registercustomer(cus);
-			System.out.println("wassup2");
+		Bank bankacc = new  Bank();
+		bankacc.setAmount(0);
+		bankacc.setAmzamount(0);
+		
+		cus.setBank(bankacc);
+		
+		 int resp = CustomerDAO.registercustomer(cus, bankacc);
+			System.out.println("wassup2 resp value from dao is " +resp );
 
+			
+			
 		 if(resp >0)
 		 {
 			 String result = resp+"";

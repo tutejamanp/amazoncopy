@@ -4,7 +4,7 @@ $(document).ready(function() {
 	
 	
 	var api;
-	api = "http://localhost:8055/amazon.com/webapi/CategoryController/categories/0";
+	api = "http://localhost:8055/amazon.com/webapi/CategoryController/allcategories";
 
 	$.get(api , function(data, status){
 

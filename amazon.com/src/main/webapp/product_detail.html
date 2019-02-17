@@ -58,14 +58,9 @@ $(document).ready(function(){
 			$('#signInButton').hide();
 			var responsebirthdate = new Date(udata.dob);
 			var currentdate = new Date ();
-			console.log(responsebirthdate);
-			console.log(currentdate);
-			console.log(currentdate.getMonth());
-			console.log(responsebirthdate.getMonth());
-			console.log(currentdate.getDate());
-			console.log(responsebirthdate.getDate());
+			
 			if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){
-			console.log("happy birthday");
+		//	$('#birthday_price').html("<span class=\"currency\">INR  ₹</span><span class=\"num\" id=\"discountedPrice\">"++"</span>");
 			is_birthday = true;
 			}
 		}
@@ -255,7 +250,12 @@ function addcheckoutitems() {
 	<var class="price h3 text-success"> 
 	
 		<span class="currency">INR  ₹</span><span class="num" id="discountedPrice"></span>
+	</var>
+	<var class="price h3 text-warning" id="birthday_price"> 
+	
+		
 	</var> 
+	 
 	 
 </div> <!-- price-detail-wrap .// -->
 <dl>
