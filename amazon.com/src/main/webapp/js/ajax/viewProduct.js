@@ -7,7 +7,15 @@ function viewProduct() {
 		//Ajax Call for getting individual product
 		$.get(api , function(data, status){
 		    product = data[0];
-
+		    
+		    var api2 = "http://localhost:8055/amazon.com/webapi/UserController/checkSellerDetails/"+product.seller;
+		    $.get(api2 , function(data, status){
+		    	console.log(data);
+			    $('#sellerInfo').html("Company Name : "+data.companyname+" <br/> User ID: "+data.userid+" Contact No: "+data.contact_no);
+			});
+		    
+		    
+		    localStorage.setItem("seller_id", product.seller);
 
 		    //Inserting places to div
 		    $('#productTitle').html(product.productname);

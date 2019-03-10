@@ -1,5 +1,8 @@
 package ooad.amazon.com.dao;
 
+import java.util.List;
+
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 
 import ooad.amazon.com.bean.Bank;
@@ -19,4 +22,18 @@ public class BankDAO {
 		ses.getTransaction().commit();
 		ses.close();
 	}
+	
+	public static Integer getamazonbalance() {
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		SQLQuery query = ses.createSQLQuery("select sum(amzamount) from bank");
+		List<Object[]> nlist = query.list();
+		System.out.println("call sucessfull : "+nlist);
+		ses.getTransaction().commit();
+		ses.close();
+		return Integer.parseInt(""+nlist.get(0));
+	}
+	
+	
+	
 }

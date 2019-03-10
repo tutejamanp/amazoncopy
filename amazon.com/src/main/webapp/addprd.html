@@ -12,8 +12,15 @@
 
 $(document).ready(function(){
 	console.log("here");
-
 	var udata = JSON.parse(localStorage.getItem("userdata"));
+	var api2 = "http://localhost:8055/amazon.com/webapi/UserController/checkSellerDetails/"+udata.id;
+    $.get(api2 , function(data, status){
+		console.log(data);
+    	if(data == 0) {
+    		alert("Please enter seller information");
+    		window.location.href = "addseller.html";
+    	}
+    });
 	var is_birthday = false;
 
 	if(udata == null) {

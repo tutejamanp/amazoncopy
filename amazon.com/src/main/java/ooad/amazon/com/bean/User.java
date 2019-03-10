@@ -64,14 +64,8 @@ public class User {
 	
     
     
-    @ElementCollection
-    @GenericGenerator(name="cardGenerator",strategy="sequence")
-    @CollectionId(
-        columns=@Column(name="cardid"),
-        type=@Type(type="long"),
-        generator="cardGenerator"
-    )
-    
+   @OneToMany
+   @JoinColumn(name="user_id")
     private List<Card> cardlist = new ArrayList<Card>();
 	
     

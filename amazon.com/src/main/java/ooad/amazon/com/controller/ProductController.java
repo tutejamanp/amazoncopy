@@ -60,9 +60,22 @@ public class ProductController {
 	
 		 products  = new GenericEntity<List<Product>>(ProductDAO.getProductsbyCategory(categoryid)) { };
 		 return Response.ok(products).build();
+	    }
+	 
+	 @Path("/productsBysellerId/{sellerid}")
+	 @GET
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response getProductsBySellerId(@PathParam("sellerid") int sellerid) {
+
+		 GenericEntity<List<Product>> products;
+	
+		 products  = new GenericEntity<List<Product>>(ProductDAO.getProductsbySellerId(sellerid)) { };
+		 return Response.ok(products).build();
 
 		 
 	    }
+	
+
 	 
 	 @Path("/productsById/{id}")
 	 @GET
@@ -76,8 +89,10 @@ public class ProductController {
 
 		 
 	    }
-	
-
+	 
+	 
+	 
+	 
 	 @POST 
 		@Path("/saveproduct/{seller_id}")
 		@Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -86,6 +101,7 @@ public class ProductController {
 				@FormDataParam("addImageSelect") FormDataContentDisposition fileDetail,
 				@FormDataParam("productname") String productname,
 				@FormDataParam("description") String description,
+				@FormDataParam("quantity") int quantity,
 				@FormDataParam("category") int category,
 				@FormDataParam("price") int price,
 				@FormDataParam("discountedprice") int discountedprice
@@ -109,6 +125,7 @@ public class ProductController {
 			prod.setDiscountedprice(discountedprice);
 			prod.setProductname(productname);
 			prod.setDescription(description);
+			prod.setQuantityleft(quantity);
 
 			Category cat = CategoryDAO.getCategorybyid(category);
 		
@@ -170,6 +187,71 @@ public class ProductController {
 			
 		}
 	 
+	 
+	 @POST 
+		@Path("/updateproductdetails/{productid}")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response updateproduct(
+				@FormDataParam("description") String description,
+				@FormDataParam("price") int price,
+				@FormDataParam("quantityleft") int quantity,
+				@FormDataParam("productname") String productname,
+				@FormDataParam("discountedprice") int discountedprice,
+				@PathParam("productid") int productid){
+			
+		
+		 
+		 	Product prod = ProductDAO.getProductsbyId(productid).get(0);
+			prod.setPrice(price);
+			prod.setDiscountedprice(discountedprice);
+			prod.setDescription(description);
+			prod.setQuantityleft(quantity);
+			prod.setProductname(productname);
+         
+		
+		    
+		    int resp = ProductDAO.upprod (prod);
+			
+			 if(resp >0)
+			 {
+				 String result = resp+"";
+				 return Response.status(201).entity(result).build();
+			 }
+			 else
+			 {
+				 String result = resp+"";
+				 return Response.status(404).entity(result).build();
+			 }
+			
+		}
+	 
+	 
+	 
+	 @POST 
+		@Path("/deleteproduct/{productid}")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response deleteselectedproduct(
+				@PathParam("productid") int productid){
+		 
+		 	Product prod = ProductDAO.getProductsbyId(productid).get(0);
+		    int resp = ProductDAO.deleteprod (prod);
+		    
+			 if(resp >0)
+			 {
+				 String result = resp+"";
+				 return Response.status(201).entity(result).build();
+			 }
+			 else
+			 {
+				 String result = resp+"";
+				 return Response.status(404).entity(result).build();
+			 }
+			
+		}
+	 
+	 
+
+
 	 
 	 
 	 

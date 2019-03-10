@@ -20,6 +20,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import ooad.amazon.com.bean.Category;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Order;
+import ooad.amazon.com.bean.OrderedItem;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.ProductImages;
 import ooad.amazon.com.dao.OrderDAO;
@@ -28,28 +29,30 @@ import ooad.amazon.com.dao.ProductDAO;
 @Path("/OrderController")
 public class OrderController {
 
-	 	@POST 
-		@Path("/saveorder")
-		@Consumes(MediaType.MULTIPART_FORM_DATA)
-		public Response registercus(
-				@FormDataParam("customerid") int custid,
-				@FormDataParam("productid") int prodid,
-				@FormDataParam("sellerid") int sellerid,
-				@FormDataParam("quantity") int quantity){
-			
-	 		List<Integer> sellers = new ArrayList<>();
-	 		sellers.add(sellerid);
-	 		List<Integer> prods = new ArrayList<>();
-	 		prods.add(prodid);
-	 		List<Integer> quants = new ArrayList<>();
-	 		quants.add(quantity);
-	 		String op = OrderDAO.saveOrder(custid, prods, quants);
-	 		if(op.equals("Insufficient Balance"))
-	 			return Response.status(404).entity(op).build();
-	 		else
-	 			return Response.status(201).entity(op).build();
-			
-		}
+	@POST 
+	@Path("/saveorder")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response registercus(
+			@FormDataParam("customerid") int custid,
+			@FormDataParam("productid") int prodid,
+			@FormDataParam("sellerid") int sellerid,
+			@FormDataParam("quantity") int quantity,
+			@FormDataParam("cardno") String cardno,
+			@FormDataParam("cvv") String cvv){
+		
+ 		List<Integer> sellers = new ArrayList<>();
+ 		sellers.add(sellerid);
+ 		List<Integer> prods = new ArrayList<>();
+ 		prods.add(prodid);
+ 		List<Integer> quants = new ArrayList<>();
+ 		quants.add(quantity);
+ 		String op = OrderDAO.saveOrder(custid, prods, quants, cardno, cvv);
+ 		if(op.equals("Insufficient Balance"))
+ 			return Response.status(404).entity(op).build();
+ 		else
+ 			return Response.status(201).entity(op).build();
+		
+	}
 	 	
 	 	@GET 
 		@Path("/getOrdersOfSeller/{sellerid}")
@@ -77,4 +80,44 @@ public class OrderController {
 	 			return Response.status(201).entity("done").build();
 			
 		}
+		
+		@GET
+		@Path("/getallorders/{customerid}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response listOrders(
+				@PathParam("customerid") int customerid){
+	 			List<Order> listorder = OrderDAO.getOrdersofCustomer(customerid);
+		 		 GenericEntity<List<Order>> ops  = new GenericEntity<List<Order>>(listorder){};
+		 		 System.out.print(listorder.toString());
+	 			return Response.status(201).entity(ops).build();
+			
+		}
+		
+		@POST 
+		@Path("/setDelivered")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response setdelivered(
+				@FormDataParam("orderid") int orderid){
+	 		
+	 			OrderDAO.setDelivered(orderid);
+	 		
+	 			return Response.status(201).entity("done").build();
+			
+		}
+		
+		@POST 
+		@Path("/rejectOrder")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response rejectOrder(
+				@FormDataParam("orderid") int orderid){
+	 		
+	 			OrderDAO.rejectOrder(orderid);
+	 		
+	 			return Response.status(201).entity("done").build();
+			
+		}
+		
+		
+		
+		
 }

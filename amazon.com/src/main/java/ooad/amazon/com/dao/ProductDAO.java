@@ -23,6 +23,7 @@ public class ProductDAO {
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategory());
 		Hibernate.initialize(p.getProduct_reviews());
+		Hibernate.initialize(p.getLabels());
 		}
 		ses.close();
 		
@@ -37,6 +38,7 @@ public class ProductDAO {
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategory());
 		Hibernate.initialize(p.getProduct_reviews());
+		Hibernate.initialize(p.getLabels());
 		System.out.println(p.toString());
 		}
 		ses.close();
@@ -52,13 +54,33 @@ public class ProductDAO {
 		for(Product p: prodlist)
 		{Hibernate.initialize(p.getProduct_images());
 		Hibernate.initialize(p.getCategory());
-		Hibernate.initialize(p.getProduct_reviews());		
+		Hibernate.initialize(p.getProduct_reviews());	
+		Hibernate.initialize(p.getLabels());
 		System.out.println(p.toString());
 		}
 		ses.close();
 		
 		return prodlist;
 	}
+
+	
+	public static List<Product> getProductsbySellerId(int sellerid) {
+		Session ses = CommonSessionFactory.sf.openSession();
+		
+		List<Product> prodlist = ses.createNativeQuery("select * from Product where seller_id ="+ sellerid + ";", Product.class).list();
+		for(Product p: prodlist)
+		{Hibernate.initialize(p.getProduct_images());
+		Hibernate.initialize(p.getCategory());
+		Hibernate.initialize(p.getProduct_reviews());	
+		Hibernate.initialize(p.getLabels());
+		System.out.println(p.toString());
+		}
+		ses.close();
+		
+		return prodlist;
+	}
+	
+	
 	
 	
 	public static int addproduct(int sellerid, Product prod1, Category category, List<ProductImages> images) {
@@ -115,5 +137,29 @@ public static int updateproduct(int pid , int price , int isbday) {
 	}
 	
 	
+
+public static int upprod (Product prod) {
+	
+	Session ses = CommonSessionFactory.sf.openSession();
+	ses.beginTransaction();
+	ses.update(prod);
+	ses.getTransaction().commit();
+	ses.close();
+	
+	return 1;
+}
+
+public static int deleteprod (Product prod) {
+	
+	Session ses = CommonSessionFactory.sf.openSession();
+	ses.beginTransaction();
+	ses.delete(prod);
+	ses.getTransaction().commit();
+	ses.close();
+	return 1;
+}
+
+
+
 	
 }

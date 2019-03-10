@@ -263,7 +263,7 @@ $.get(api , function(data, status){
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="Bank.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="manage_sales.html">Customer Service</a>  	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="card_details.html">MyCards</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="customer_orders.html">My Orders</a><a class="text-light text-margin" href="manage_sales.html">Manage Sales</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">

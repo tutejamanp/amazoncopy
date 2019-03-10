@@ -23,6 +23,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
+import ooad.amazon.com.bean.Seller;
 import ooad.amazon.com.dao.CustomerDAO;
 import ooad.amazon.com.dao.ProductDAO;
 import ooad.amazon.com.dao.UserDAO;
@@ -121,6 +122,61 @@ public class UserController {
 	    }
 	
 	
+	@POST 
+	@Path("/saveSeller")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.TEXT_PLAIN )
+	public Response saveseller(
+			@FormDataParam("userid") int userid,
+			@FormDataParam("companyname") String companyname,
+			@FormDataParam("gstin") String gstin,
+			@FormDataParam("pan") String pan,
+			@FormDataParam("contactno") String contactno,
+			@FormDataParam("cardno") String cardno,
+			@FormDataParam("cvv") String cvv){
+		
+		
+		
+		System.out.println("card from is :" +cardno );
+		System.out.println("cvv from is :" +cvv );	
+		
+		
+		
+ 		Seller seller = new Seller(companyname, gstin, pan, contactno, 0, 0);
+ 		seller.setUserid(userid);
+		 String resp = UserDAO.addsellerdetails(seller, cardno, cvv);
+	
+		 System.out.println(""+resp);
+		
+		return Response.ok(resp).build();			 
+		
+		
+	}	
+	
+	@Path("/checkSellerDetails/{userid}")
+	 @GET
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response checkseller(@PathParam("userid") int userid) {
+
+		Seller seller = UserDAO.checkifDetailsExist(userid);
+		if(seller == null)
+			return Response.ok("0").build();
+		else {
+			 GenericEntity<Seller> s;
+			 s  = new GenericEntity<Seller>(seller) { };
+			 return Response.ok(s).build();
+			}
+	    }
+	
+	@Path("/getAmountOwed/{userid}")
+	 @GET
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response getamountowed(@PathParam("userid") int userid) {
+
+		int amt = UserDAO.getAmountOwed(userid);
+		return Response.ok(amt).build();
+			
+	    }
 	
 	
 	

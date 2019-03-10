@@ -1,6 +1,7 @@
 package ooad.amazon.com.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Access;
@@ -37,6 +38,11 @@ public class Product {
 	private int seller;
 	private int bdayprice;
 	private boolean is_bdayproduct;
+	
+	private int stock;
+	private String color;
+	private String manufacturer;
+	private Date manufactured_date;
 	
 	
 	
@@ -83,6 +89,10 @@ public class Product {
 	@OneToMany
 	@JoinColumn(name="proId")
 	List<ProdReview> product_reviews = new ArrayList<ProdReview>();
+	
+	@OneToMany
+	@JoinColumn(name="proId")
+	List<Label> labels = new ArrayList<Label>();
 	
 	
 	public Product() {
@@ -187,6 +197,46 @@ public class Product {
 
 	public void setSeller(int seller) {
 		this.seller = seller;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+	public Date getManufactured_date() {
+		return manufactured_date;
+	}
+
+	public void setManufactured_date(Date manufactured_date) {
+		this.manufactured_date = manufactured_date;
+	}
+
+	public List<Label> getLabels() {
+		return labels;
+	}
+
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
 	}
 
 	

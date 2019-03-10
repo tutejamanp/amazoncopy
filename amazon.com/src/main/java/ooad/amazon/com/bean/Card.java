@@ -1,61 +1,67 @@
 package ooad.amazon.com.bean;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 
-@Embeddable
+@Entity
+@Table(uniqueConstraints = {
+	      @UniqueConstraint(columnNames = "cardno", name = "uniquecardno")}
+	)
 public class Card{
+	@Id
+	@GenericGenerator(name="cardgenerator" , strategy="increment")
+	@GeneratedValue(generator="cardgenerator")
+	private int id;
 	
 	private String cardno;
-	
-	public Card(String cardno, boolean is_debit, int cvv, int expmonth, int expyear, String cardholdername) {
-		super();
-		this.cardno = cardno;
-		this.is_debit = is_debit;
-		this.cvv = cvv;
-		this.expmonth = expmonth;
-		this.expyear = expyear;
-		this.cardholdername = cardholdername;
-	}
+	private String cvv;
+	private String cardholdername;
+	private int balance;
 	
 	
+
 	public Card() {
 		super();
 	}
-	private boolean is_debit ;
-	private int cvv;
-	private int expmonth;
-	private int expyear;
-	private String cardholdername;
+	
+	public Card(String cardno, String cvv, String cardholdername, int balance) {
+		super();
+		this.cardno = cardno;
+		this.cvv = cvv;
+		this.cardholdername = cardholdername;
+		this.balance = balance;
+	}
+
+
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getCardno() {
 		return cardno;
 	}
 	public void setCardno(String cardno) {
 		this.cardno = cardno;
 	}
-	public boolean isIs_debit() {
-		return is_debit;
-	}
-	public void setIs_debit(boolean is_debit) {
-		this.is_debit = is_debit;
-	}
-	public int getCvv() {
+	public String getCvv() {
 		return cvv;
 	}
-	public void setCvv(int cvv) {
+	public void setCvv(String cvv) {
 		this.cvv = cvv;
-	}
-	public int getExpmonth() {
-		return expmonth;
-	}
-	public void setExpmonth(int expmonth) {
-		this.expmonth = expmonth;
-	}
-	public int getExpyear() {
-		return expyear;
-	}
-	public void setExpyear(int expyear) {
-		this.expyear = expyear;
 	}
 	public String getCardholdername() {
 		return cardholdername;
@@ -63,6 +69,24 @@ public class Card{
 	public void setCardholdername(String cardholdername) {
 		this.cardholdername = cardholdername;
 	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	@Override
+	public String toString() {
+		return "Card [id=" + id + ", cardno=" + cardno + ", cvv=" + cvv + ", cardholdername=" + cardholdername
+				+ ", balance=" + balance + "]";
+	}
+
+
+	
+	
 	
 
 }

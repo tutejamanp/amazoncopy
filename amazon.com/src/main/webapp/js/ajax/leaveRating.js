@@ -20,7 +20,7 @@ function make_review(){
         	//window.location.href="http://localhost:8055/amazon.com/";
         	alert("Successfully Left The Review");
 
-        	location.reload(true);
+        	window.location.href = "product_detail.html";
         }
     });
 }

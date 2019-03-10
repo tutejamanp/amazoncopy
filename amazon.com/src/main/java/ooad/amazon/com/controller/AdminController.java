@@ -21,6 +21,8 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import ooad.amazon.com.bean.Admin;
+import ooad.amazon.com.bean.Advertisment;
+import ooad.amazon.com.bean.Card;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.dao.AdminDAO;
@@ -88,6 +90,66 @@ public class AdminController {
 	}
 		
 	
+	
+	@GET
+	@Path("/displayuser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Customer> displayuser(){
+		List<Customer> usr =AdminDAO.displayuser();
+		System.out.println("resp: "+usr.toString());
+		return usr;
+		
+	}
+	
+	@GET
+	@Path("/displayadmin")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Admin> displayadmin(){
+		List<Admin> usr =AdminDAO.displayadmin();
+		
+		return usr;
+		
+	}
+	
+	@GET
+	@Path("/displayadvert")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Advertisment> displayadvert(){
+		List<Advertisment> usr =AdminDAO.displayadvert();
+		
+		return usr;
+		
+	}
+	
+	@GET
+	@Path("/displayseller")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Customer> displayseller(){
+		List<Customer> usr =AdminDAO.displayseller();
+		
+		return usr;
+		
+	}
+	
+	@GET
+	@Path("/displayprodseller/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Customer> displayprodseller(@PathParam("id") int id){
+		List<Customer> usr =AdminDAO.displayprodseller(id);
+		
+		return usr;
+		
+	}
+	
+	@GET
+	@Path("/bankdetails/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Card> bankdetails(@PathParam("id") int id){
+		List<Card> usr =AdminDAO.bankdetails(id);
+		
+		return usr;
+		
+	}
 	
 	
 	

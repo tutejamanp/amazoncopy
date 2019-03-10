@@ -49,7 +49,7 @@ function displayComments() {
 			
 			console.log(product);
 			if(review_count > 0) {
-				$('#productRating').html(makeStars(review_average/review_count));
+				$('#productRating').html(makeStars(review_average/review_count) + " Out of ("+review_count+")");
 				if(myId > 0) {
 					
 					$("#reviewer"+myId).text("My Review");

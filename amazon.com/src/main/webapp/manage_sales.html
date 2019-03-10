@@ -42,6 +42,73 @@
 
 </head>
 <body>
+<script type="text/javascript">
+
+
+function SignOut() {
+	localStorage.removeItem("userdata");
+	window.location.href = "http://localhost:8055/amazon.com/";
+}
+
+function setCategory(id1) {
+	localStorage.setItem("selectedcategory",id1);
+	console.log('value of lc is :'+localStorage.getItem("selectedcategory"));
+	window.location.href = "http://localhost:8055/amazon.com/search.html";
+}
+
+	$(document).ready(function(){
+		var udata = JSON.parse(localStorage.getItem("userdata"));
+		var is_birthday = false;
+
+		if(udata == null) {
+			$('#nameText').text("Hello, Sign In");
+			//$('#deliverTo').text("");
+			//$('#myAmazon').text("Your Amazon");m
+		} else {
+			$('#nameText').text("Hello, " + udata.fname);
+			$('#deliverTo').text("Deliver To, " + udata.fname);
+			$('#myAmazon').text(udata.fname+"'s Amazon");
+			$('#signInButton').hide();
+			var responsebirthdate = new Date(udata.dob);
+			var currentdate = new Date ();
+			console.log(responsebirthdate);
+			console.log(currentdate);
+			console.log(currentdate.getMonth());
+			console.log(responsebirthdate.getMonth());
+			console.log(currentdate.getDate());
+			console.log(responsebirthdate.getDate());
+			if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){
+			console.log("happy birthday");
+			is_birthday = true;
+			}
+		}
+		
+		
+		var api;
+		api = "http://localhost:8055/amazon.com/webapi/CategoryController/allcategories";
+
+
+		$.get(api , function(data, status){
+
+		    var myString="";
+		   //myString = myString + "<option selected='default'> Select Category</option>";
+				
+		    for(var i = 0; i < data.length; i++)
+			{
+		    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
+		    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
+		    	 myString=myString+"<option class='dropdown-item' value = '"+ data[i].cat_id +"' onclick= 'setCategory("+data[i].cat_id+");'>"+ data[i].categoryname +"</option>";
+				console.log(myString);
+			}
+		   
+		    //alert(""+myString);
+		    
+		    $('#shopbyCat').html(myString);
+		   // $('#addsupid').text(0);
+
+				});
+	});
+</script>
 <header class="section-header background-amazon">
 <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container row">
@@ -95,7 +162,7 @@
 		</div>
 		<div class="col-sm-5 category-wrap dropdown py-1">
 		<button type="button" class="btn background-amazon  dropdown-toggle" data-toggle="dropdown" ><b> Shop By Categories</b></button>
-		<div class="dropdown-menu" >
+		<div class="dropdown-menu" id="shopbyCat">
 			<a id="Skin Care" class="dropdown-item" href="search.html" onclick="setCategory(this.id);" >Skin Care </a>
 			<a class="dropdown-item" href="404.html">Hair and Others </a> 
 		</div>
@@ -105,7 +172,7 @@
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin" href="404.html">Today's Deals</a> <a class="text-light text-margin" href="404.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="404.html">Customer Service</a>  	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="card_details.html">MyCards</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="customer_orders.html">My Orders</a><a class="text-light text-margin" href="manage_sales.html">Manage Sales</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">

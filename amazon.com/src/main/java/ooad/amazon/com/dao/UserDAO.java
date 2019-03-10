@@ -7,9 +7,12 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import ooad.amazon.com.bean.Bank;
+import ooad.amazon.com.bean.Card;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Order;
 import ooad.amazon.com.bean.Product;
+import ooad.amazon.com.bean.Seller;
 import ooad.amazon.com.bean.User;
 import ooad.amazon.com.resources.CommonSessionFactory;
 
@@ -44,6 +47,8 @@ public class UserDAO {
 					for(Product p : c.getProductlist()) {
 						Hibernate.initialize(p.getProduct_images());
 						Hibernate.initialize(p.getProduct_reviews());
+						Hibernate.initialize(p.getLabels());
+
 						//Hibernate.initialize(p.getCategory());
 					}
 					
@@ -85,6 +90,67 @@ public class UserDAO {
 		return false;
 	}
 	
+public static String addsellerdetails(Seller seller, String cardno, String cvv) {
+		
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		User selleruser = (User)ses.load(User.class, seller.getUserid());
+		
+		List<Card> cardsseller  = selleruser.getCardlist();
+		Card sellercard = null;
+		boolean cardfound = false;
+		for(Card c: cardsseller) {
+			if(c.getCardno().equals(cardno)) {
+				sellercard = c;
+				cardfound = true;
+				break;
+			}		
+		}
+				
+		if(cardfound == false) {
+			ses.getTransaction().commit();
+			ses.close();
+			return "Card not found";
+		}
+		if(!sellercard.getCvv().equals(cvv)) {
+			ses.getTransaction().commit();
+			ses.close();
+			return "Invalid cvv";
+		}
+		
+		seller.setCardid(sellercard.getId());
+		ses.save(seller);
+		ses.getTransaction().commit();
+		ses.close();
+		return "Success";
+	}
 	
+	public static Seller checkifDetailsExist(int userid) {
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		
+		Query query = ses.createQuery("from Seller where userid = " + userid);
+		List<Seller> lusers  = (List<Seller>) query.list(); 
+		if(lusers.size() > 0)
+			return lusers.get(0);
+		else
+			return null;
+	}
+	
+	public static int getAmountOwed(int userid) {
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		
+		User user = (User)ses.load(User.class, userid);
+		System.out.println("&&&&&&&&&" + user.toString());
+		Hibernate.initialize(user.getBank());
+		
+		Query query = ses.createQuery("from Bank where id = " + user.getBank().getId());
+		List<Bank> bankdetails  = (List<Bank>) query.list(); 
+		if(bankdetails.size() > 0)
+			return bankdetails.get(0).getAmzamount();
+		else
+			return 0;
+	}
 	
 }

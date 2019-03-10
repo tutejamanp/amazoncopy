@@ -27,6 +27,7 @@ public class Order {
 	private Date orderdate;
 	private int totalamount;
 	private int buyerid;
+	private int cardusedid;
 	
 	
 	@ElementCollection
@@ -79,6 +80,12 @@ public class Order {
 	public String toString() {
 		return "Order [orderid=" + orderid + ", orderdate=" + orderdate + ", totalamount=" + totalamount + ", buyerid="
 				+ buyerid + ", ordereditemlist=" + ordereditemlist + "]";
+	}
+	public int getCardusedid() {
+		return cardusedid;
+	}
+	public void setCardusedid(int cardusedid) {
+		this.cardusedid = cardusedid;
 	}
 	
 	

@@ -107,12 +107,12 @@ public class mc {
 //		  fs.setEmailid("pavesh@gmail.com"); fs.setIs_customer(1); ses.save(fs);
 //		  
 		 
-		Seller fs = new Seller("Sumeet Electronics", "12356166", "4464664", "9884669961", 1.4f, 7);
+		/*Seller fs = new Seller("Sumeet Electronics", "12356166", "4464664", "9884669961", 1.4f, 7);
 		fs.setPassword("9025412362");
 		fs.setEmailid("bhavesh@gmail.com");
 		fs.setIs_customer(2);
 		ses.save(fs);
-
+*/
 //		Address addr = new Address();
 //		addr.setAddressline1("250C");
 //		addr.setAddressline2("infy 2");
@@ -167,13 +167,13 @@ public class mc {
 		ses.save(prod2);
 		ses.save(prod3);
 
-		List<Product> lsp = fs.getProductlist();
+		/*List<Product> lsp = fs.getProductlist();
 		lsp.add(prod3);
 		lsp.add(prod2);
 		lsp.add(prod1);
 
 		fs.setProductlist(lsp);
-
+*/
 		// ses.save(addr);
 		/*
 	Order or = new Order(Calendar.getInstance().getTime(), 0, "Pending");
