@@ -53,14 +53,19 @@ public class User {
 	}
     
    
-	@ElementCollection()
-    @GenericGenerator(name="addrGenerator",strategy="sequence")
-    @CollectionId(
-        columns=@Column(name="aid"),
-        type=@Type(type="long"),
-        generator="addrGenerator"
-    )
+//	@ElementCollection()
+//    @GenericGenerator(name="addrGenerator",strategy="sequence")
+//    @CollectionId(
+//        columns=@Column(name="aid"),
+//        type=@Type(type="long"),
+//        generator="addrGenerator"
+//    )
+//    private List<Address> addrlist = new ArrayList<Address>();
+    
+    @OneToMany
+    @JoinColumn(name="addr_id")
     private List<Address> addrlist = new ArrayList<Address>();
+
 	
     
     

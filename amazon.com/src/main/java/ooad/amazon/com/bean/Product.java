@@ -66,6 +66,8 @@ public class Product {
 	private Category category;
 	
 	
+	
+	
 	public Category getCategory() {
 		return category;
 	}
@@ -73,6 +75,7 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
 
 	public int getTotalreviews() {
 		return totalreviews;

@@ -60,6 +60,8 @@
 			console.log("Here");
 			var form = new FormData();
 			var udata = JSON.parse(localStorage.getItem("userdata"));
+			var addr = localStorage.getItem("shippingAddress");
+			alert("4444" + addr);
 			form.append('customerid', udata.id );
 			var cartqty = localStorage.getItem("cartProductQty");
 			var cartprice = localStorage.getItem("cartProductValue");
@@ -67,6 +69,7 @@
 			form.append('cardno', $('#cardno').val());
 			form.append('cvv', $('#cvv').val());
 			form.append('quantity', cartqty);
+			form.append('address', addr);
 			form.append('productid', localStorage.getItem("viewingProduct"));
 			console.log(form);
 			

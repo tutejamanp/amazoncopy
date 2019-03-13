@@ -61,7 +61,7 @@ function displayCards() {
 	console.log("Here");	
 	$.get(api , function(data, status){
 		console.log(data);
-		$('#userBalance').html("You are Owed: "+ data);
+		$('#userBalance').html("Amazon Owes You: "+ data);
 	    	
 	    });
     	

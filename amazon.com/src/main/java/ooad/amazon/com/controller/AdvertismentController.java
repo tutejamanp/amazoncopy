@@ -21,7 +21,9 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import ooad.amazon.com.bean.Advertisment;
+import ooad.amazon.com.bean.Category;
 import ooad.amazon.com.dao.AdvertisementDAO;
+import ooad.amazon.com.dao.CategoryDAO;
 
 @Path("/AdvertismentController")
 public class AdvertismentController {
@@ -49,6 +51,7 @@ public class AdvertismentController {
 			@FormDataParam("addImageSelect") FormDataContentDisposition fileDetail,
 			@FormDataParam("productname") String productname,
 			@FormDataParam("category") String category,
+			@FormDataParam("subcategory") String subcategory,
 			@FormDataParam("bday") String bday,
 			@FormDataParam("active") String active) {
 		
@@ -70,6 +73,17 @@ public class AdvertismentController {
 		Advertisment ad = new Advertisment();
 		ad.setAdver_name(productname);
 		ad.setCategorytoshow(category);
+		
+		Category cat;
+        if(subcategory.equals("-1"))
+        {
+        	ad.setCategorytoshow(category);
+        }
+        
+        else
+        {
+		    ad.setCategorytoshow(subcategory);
+        }
 		//ad.setIs_active(bday);
 		if(bday.equals("1")) {
 				ad.setIs_bday(true);

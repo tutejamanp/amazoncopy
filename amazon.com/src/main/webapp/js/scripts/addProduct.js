@@ -37,6 +37,24 @@ function addProduct() {
     var data = new FormData(form);
     
     var udata = JSON.parse(localStorage.getItem("userdata"));
+    
+   
+    var customlabels = [];
+    var lnames = []
+    $("table tr").each(function(i){
+      if(i==0) return;
+      var lname = $.trim($(this).find("td").eq(0).html());
+      var lvalue = $.trim($(this).find("td").eq(1).html());
+      customlabels.push(lname + "--" +lvalue);
+    });
+    
+    console.log(customlabels.join(','));
+    alert(customlabels);
+    
+    data.append('customlabels',	customlabels);
+ 
+    
+    
     console.log(udata.emailid);
     $.ajax({
     	type: "POST",

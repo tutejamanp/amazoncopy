@@ -79,7 +79,7 @@ if(udata == null) {
 } else {
 	$('#nameText').text("Hello, " + udata.fname);
 	$('#deliverTo').text("Deliver To, " + udata.fname);
-	$('#myAmazon').text(udata.fname+"'s Amazon");
+	//$('#myAmazon').text(udata.fname+"'s Amazon");
 	$('#signInButton').hide();
 	var responsebirthdate = new Date(udata.dob);
 	var currentdate = new Date ();
@@ -159,25 +159,31 @@ $.get(api , function(data, status){
 
 
 
-
 var api;
-api = "http://localhost:8055/amazon.com/webapi/CategoryController/allcategories";
+api = "http://localhost:8055/amazon.com/webapi/CategoryController/rootcategories";
 
-
+var myString="";
 $.get(api , function(data, status){
-
-    var myString="";
-   //myString = myString + "<option selected='default'> Select Category</option>";
+   // alert("hello");
+    
+    myString = "<ul>";
+    
 		
     for(var i = 0; i < data.length; i++)
-	{
-    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
-    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
-    	 myString=myString+"<option class='dropdown-item' value = '"+ data[i].cat_id +"' onclick= 'setCategory("+data[i].cat_id+");'>"+ data[i].categoryname +"</option>";
-		console.log(myString);
+	{ 
+   	 
+    	myString = myString + "<li>";
+    	myString=myString+"<a class='dropdown-toggle' id='"+data[i].cat_id+"' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' onclick ='setCategory("+data[i].cat_id+");'  >"+data[i].categoryname+"</a>";
+    	
+    	var current_category = data[i].cat_id;
+    	
+    	myString = myString + getSubCat(current_category);
+    	 
+    	  myString = myString + "</li>";
+    	 console.log(myString);
 	}
-   
-    //alert(""+myString);
+    myString = myString + "</ul>";
+
     
     $('#shopbyCat').html(myString);
    // $('#addsupid').text(0);
@@ -189,9 +195,54 @@ $.get(api , function(data, status){
 
 
 
-
 });
 
+function getSubCat(catID)
+{
+	/*var api1="http://localhost:8055/amazon.com/webapi/CategoryController/categories/"+catID;
+	
+	var myString = "";
+	$.get(api1 , function(data1, status){
+	    alert("hello1"+myString);    	   
+	    myString = myString + "<ul class='dropdown-menu'>";
+	    for(var j = 0; j < data1.length; j++)
+		{ 
+	   	
+	    	myString = myString + "<li>";
+	    	myString=myString+"<a href='#'>"+data1[j].categoryname+"</a>";
+	    	 
+	    	 
+	    	  myString = myString + "</li>";
+	    	 console.log(myString);
+		}
+	    
+	    myString = myString + "</ul>";
+
+	});*/
+	var myString = "";
+
+	$.ajax({
+	    url: "http://localhost:8055/amazon.com/webapi/CategoryController/categories/"+catID,
+	    type: 'GET',
+	    async: false,
+	    success: function(data1) {
+		    myString = myString + "<ul>";
+		    for(var j = 0; j < data1.length; j++)
+			{ 
+		   	
+		    	myString = myString + "<li>";
+		    	myString=myString+"<a href='#'  onclick ='setCategory("+data1[j].cat_id+");' >"+data1[j].categoryname+"</a>";
+		    	 
+		    	 
+		    	  myString = myString + "</li>";
+		    	 console.log(myString);
+			}
+		    
+		    myString = myString + "</ul>";
+	    }
+	});
+	return myString;
+}
 
 
 
@@ -263,7 +314,7 @@ $.get(api , function(data, status){
 	</div>
 	<!-- Nav Bar Category End -->
 	<div class="col-lg-10-24 col-sm-8 small text-light">
-		 <a class="text-light text-margin" href="404.html">Buy Again</a> <a  class="text-light text-margin" href="404.html" id="myAmazon">Your Amazon</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="card_details.html">MyCards</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="customer_orders.html">My Orders</a><a class="text-light text-margin" href="manage_sales.html">Manage Sales</a>  	</div> <!-- col.// -->
+		 <a class="text-light text-margin" href="addAddress.html">My Address</a> <a  class="text-light text-margin" href="customer_orders.html" id="myAmazon">My Orders</a> <a  class="text-light text-margin"  href="404.html">Today's Deals</a> <a class="text-light text-margin" href="Bank.html">Amazon Pay</a> <a class="text-light text-margin" href="addprd.html">Sell</a> <a class="text-light text-margin" href="manage_sales.html">Customer Service</a>  	</div> <!-- col.// -->
 	<div class="col-lg-7-24 col-sm-12">
 		<div class="widgets-wrap float-right row no-gutters py-1">
 			<div class="col-auto">
@@ -414,7 +465,7 @@ $.get(api , function(data, status){
    
    
     <figure class=" card card-product" onclick="window.location.href='404.html';">
-    <div class="card-header bg-white"><h4>Up to ₹1,500 back*</h4></div>
+    <div class="card-header bg-white"><h4>Up to ?1,500 back*</h4></div>
         <div class="img-wrap"> <img src="images/categories/2.jpg"></div>
         <figcaption class="info-wrap">
             <small>On ICICI debit & credit card EMI. *T&C Apply</small>
@@ -434,7 +485,7 @@ $.get(api , function(data, status){
     <div class="card-header bg-white"><h4>Fire TV Stick</h4></div>
         <div class="img-wrap"> <img src="images/categories/3.jpg"></div>
         <figcaption class="info-wrap">
-            <small>Stream movies, TV shows & more | ₹3,999</small>
+            <small>Stream movies, TV shows & more | ?3,999</small>
            
             <div class="price-wrap">
                 <small><a href="404.html">Shop now</a></small>
@@ -482,7 +533,7 @@ $.get(api , function(data, status){
     <div class="card-header bg-white"><h4>Mobile Prepaid Recharges</h4></div>
         <div class="img-wrap"> <img src="images/categories/6.jpg"></div>
         <figcaption class="info-wrap">
-            <small>Up to ₹50 back</small>
+            <small>Up to ?50 back</small>
            
             <div class="price-wrap">
                 <small><a href="404.html">Recharge Now</a></small>
@@ -498,7 +549,7 @@ $.get(api , function(data, status){
     <div class="card-header bg-white"><h4>All-New Kindle Paperwhite</h4></div>
         <div class="img-wrap"> <img src="images/categories/7.jpg"></div>
         <figcaption class="info-wrap">
-            <small>Thinner, Lighter, Waterproof with 2X Storage - At ₹12,999</small>
+            <small>Thinner, Lighter, Waterproof with 2X Storage - At ?12,999</small>
            
             <div class="price-wrap">
                 <small><a href="404.html">Shop Now</a></small>

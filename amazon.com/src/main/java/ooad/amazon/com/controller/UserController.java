@@ -3,6 +3,7 @@ package ooad.amazon.com.controller;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import ooad.amazon.com.bean.Address;
 import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
@@ -61,17 +63,34 @@ public class UserController {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	public Response registercus(
 			@FormParam("fullname") String fname,
-			@FormParam("email") String email,@FormParam("phonenumber") String phone,@FormParam("password1") String password
-			,@FormParam("dob") String dob ){
+			@FormParam("email") String email,
+			@FormParam("phonenumber") String phone,
+			@FormParam("password1") String password,
+			@FormParam("dob") String dob,
+			@FormParam("addr_line1") String addr_line1,
+			@FormParam("addr_line2") String addr_line2,
+			@FormParam("street") String street,
+			@FormParam("city") String city,
+			@FormParam("pincode") int pincode){
 		
  		System.out.println("wassup1" + dob);
 		
-		
+ 		Address addr = new Address();
+ 		addr.setAddressline1(addr_line1);
+ 		addr.setAddressline2(addr_line2);
+ 		addr.setStreet(street);
+ 		addr.setCity(city);
+ 		addr.setPincode(pincode);
+ 		
+ 		List<Address> addrList = new ArrayList<>();
+ 		addrList.add(addr);
+ 		
 		Customer cus = new Customer();
 		cus.setFname(fname);
 		cus.setEmailid(email);
 		cus.setContact_no(phone);
 		cus.setPassword(password);
+		cus.setAddrlist(addrList);
 		
 		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
 		Date date = null;
@@ -91,7 +110,7 @@ public class UserController {
 		
 		cus.setBank(bankacc);
 		
-		 int resp = CustomerDAO.registercustomer(cus, bankacc);
+		 int resp = CustomerDAO.registercustomer(cus, bankacc, addr);
 			System.out.println("wassup2 resp value from dao is " +resp );
 
 			

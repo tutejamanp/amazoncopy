@@ -24,7 +24,7 @@ public class CategoryDAO {
 	public static List<Category> getAllrootCategories() {
 		Session ses = CommonSessionFactory.sf.openSession();
 		List<Category> catList;
-		catList = ses.createNativeQuery("select * from Category where super_cat_id IS NULL",Category.class).list();
+		catList = ses.createNativeQuery("select * from Category where super_cat_id = 0",Category.class).list();
 		ses.close();
 		return catList;
 		

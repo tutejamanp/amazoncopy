@@ -98,12 +98,41 @@ function add(f)
 var rootmenu = "<a href ='javascript:void(0);' onclick='back(0);'>Home</a> » ";
 function back(h)
 {
+	if(h==0)
+		{
+		var api="http://localhost:8055/amazon.com/webapi/CategoryController/rootcategories";
+		$('#addsupid').text(h);
+		$.get(api , function(data, status){
+
+		    var myString="";
+		    myString = myString + "<select onchange = 'subcat(this)'><option>-Default-</option>";
+				
+		    for(var i = 0; i < data.length; i++)
+			{
+		    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
+		    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
+		    	 myString=myString+"<option value = '"+ data[i].cat_id +"'>"+ data[i].categoryname +"</option>";
+			}
+		    myString = myString + "</select>"
+		    //alert(""+myString);
+		    //alert(data[0].super_cat_it);
+		    $('#cat').html(myString);
+		    var x = data[0].super_cat;
+		    //alert(alertobjectKeys(x));
+		    listcat = "";
+		    $('#currentCat').html(rootmenu + alertobjectKeys(x));
+
+				});		
+		}
+	else
+		{	
+	
 	var api="http://localhost:8055/amazon.com/webapi/CategoryController/categories/"+h;
 	$('#addsupid').text(h);
 	$.get(api , function(data, status){
 
 	    var myString="";
-	    myString = myString + "<select onchange = 'subcat(this)'><option>-Default-</option>";
+	    myString = myString + "<select><option>-Default-</option>";
 			
 	    for(var i = 0; i < data.length; i++)
 		{
@@ -121,7 +150,7 @@ function back(h)
 	    $('#currentCat').html(rootmenu + alertobjectKeys(x));
 
 			});
-	
+}	
 };
 var listcat = "";
 function alertobjectKeys(data) {
@@ -165,7 +194,7 @@ function subcat(a)
 		/* listcat="";
 		$('#currentCat').html(alertobjectKeys(data[0].super_cat)); */
 	    var myString="";
-	    myString = myString + "<select onchange = 'subcat(this)'><option>-Default-</option>";
+	    myString = myString + "<select><option>-Default-</option>";
 			
 	    for(var i = 0; i < data.length; i++)
 		{

@@ -21,7 +21,7 @@ import ooad.amazon.com.resources.CommonSessionFactory;
 
 public class OrderDAO {
 
-public static String saveOrder(int custid, List<Integer> prodids, List<Integer> quantities, String cardno, String cvv) {
+public static String saveOrder(int custid, List<Integer> prodids, List<Integer> quantities, String cardno,String addr, String cvv) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
 		ses.beginTransaction();
@@ -97,6 +97,7 @@ public static String saveOrder(int custid, List<Integer> prodids, List<Integer> 
 			order.setBuyerid(custid);
 			order.setCardusedid(buyercard.getId());
 			order.setOrdereditemlist(itemlist);
+			order.setDeliveryAddress(addr);
 			ses.save(order);
 			
 			List<Order> orderlist = buyer.getOrderlist();

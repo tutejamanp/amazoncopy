@@ -1,16 +1,30 @@
 package ooad.amazon.com.bean;
 import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
-@Embeddable
+@Entity
 public class Address{
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id ;
 	private String addressline1;
 	private String addressline2;
 	private String street;
 	private String city;
 	private int pincode;
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getAddressline1() {
 		return addressline1;
 	}

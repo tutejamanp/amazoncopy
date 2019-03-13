@@ -28,6 +28,7 @@ public class Order {
 	private int totalamount;
 	private int buyerid;
 	private int cardusedid;
+	private String deliveryAddress;
 	
 	
 	@ElementCollection
@@ -86,6 +87,12 @@ public class Order {
 	}
 	public void setCardusedid(int cardusedid) {
 		this.cardusedid = cardusedid;
+	}
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
 	}
 	
 	

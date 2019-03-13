@@ -49,7 +49,7 @@ public class Register {
 		
 		u.setBank(bankacc);
 		//System.out.println(fname+" "+contact_no);
-		CustomerDAO.registercustomer(u, bankacc);
+		//CustomerDAO.registercustomer(u, bankacc);
 		return Response.ok(u);
 		
 	}

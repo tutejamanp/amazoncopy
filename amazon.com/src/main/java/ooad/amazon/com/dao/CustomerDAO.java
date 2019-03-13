@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import ooad.amazon.com.bean.Address;
 import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.User;
@@ -17,7 +18,7 @@ import ooad.amazon.com.resources.CommonSessionFactory;
 
 public class CustomerDAO {
 	
-	public static int registercustomer (Customer cust, Bank bankacc) {
+	public static int registercustomer (Customer cust, Bank bankacc, Address addr) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
 		ses.beginTransaction();
@@ -27,10 +28,11 @@ public class CustomerDAO {
 		
 		//Customer cu = getcustomerbyemailid(cust.getEmailid());
 		if(lusers.size()==0) {
-		ses.save(bankacc);
-		ses.save(cust);
-		ses.getTransaction().commit();
-		ses.close();
+			ses.save(addr);
+			ses.save(bankacc);
+			ses.save(cust);
+			ses.getTransaction().commit();
+			ses.close();
 		return 1;
 		}
 		else {
@@ -54,7 +56,17 @@ public class CustomerDAO {
 	
 	
 	
-	
+public static List<Address> getaddressofuser (int userid) {
+		
+		Session ses = CommonSessionFactory.sf.openSession();
+		Query query = ses.createQuery("from Address where addr_id = "+"'"+userid+"'");
+		List<Address> addrList  = (List<Address>) query.list(); 
+		
+		System.out.println("---------------"+query.toString());
+		ses.close();
+		
+			return addrList;
+	} 
 	
 	
 

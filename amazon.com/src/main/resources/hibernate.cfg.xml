@@ -28,5 +28,7 @@
     	<mapping class="ooad.amazon.com.bean.Bank" />
     	<mapping class="ooad.amazon.com.bean.Card" />
     	<mapping class="ooad.amazon.com.bean.Label" />
+    	<mapping class="ooad.amazon.com.bean.Address" />
+    	
     </session-factory>
 </hibernate-configuration>

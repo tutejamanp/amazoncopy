@@ -47,7 +47,12 @@ $(document).ready(function() {
     			email 		: $("#email").val(),
     			phonenumber	: $("#phonenumber").val(),
     			password1	: $("#password1").val(),
-    			dob 		: $('#dob').val().toString()
+    			dob 		: $('#dob').val().toString(),
+    			addr_line1	: $('#addr_line1').val(),
+    			addr_line2	: $('#addr_line2').val(),
+    			street		: $('#street').val(),
+    			city		: $('#city').val(),
+    			pincode		: $('#pincode').val()
     	};
     	
 
@@ -267,7 +272,41 @@ $(document).ready(function() {
 		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
 		</div>
         <input name="password2" class="form-control" placeholder="Repeat password" type="password" id="password2">
-    </div> <!-- form-group// -->                                      
+    </div> <!-- form-group// -->    
+    
+    
+    Address:
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input name="addr_line1" class="form-control" placeholder="Line 1"  id="addr_line1">
+    </div> <!-- form-group// -->  
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input name="addr_line2" class="form-control" placeholder="Line 2" id="addr_line2">
+    </div> <!-- form-group// -->  
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input name="street" class="form-control" placeholder="Street" id="street">
+    </div> <!-- form-group// -->  
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input name="city" class="form-control" placeholder="City" id="city">
+    </div> <!-- form-group// -->  
+    <div class="form-group input-group">
+    	<div class="input-group-prepend">
+		    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+		</div>
+        <input name="pincode" class="form-control" placeholder="PinCode" type="number" id="pincode">
+    </div> <!-- form-group// -->  
+                                      
     <div class="form-group">
         <button type="button" class="btn btn-warning btn-block" id ="registerbutton"> Create Account </button>
     </div> <!-- form-group// -->      

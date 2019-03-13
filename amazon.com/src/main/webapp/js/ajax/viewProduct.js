@@ -7,11 +7,22 @@ function viewProduct() {
 		//Ajax Call for getting individual product
 		$.get(api , function(data, status){
 		    product = data[0];
+		    var labelData = data[0].labels;
 		    
+		    var myString = "";
+		    for(var i = 0; i < labelData.length; i++)
+			{ 
+		    	myString += labelData[i].lname + " " + labelData[i].lvalue + "<br>";
+			}
+		    
+		    $('#sellerInfo').append(myString);
+		    //alert("labeldata" + labelData );
 		    var api2 = "http://localhost:8055/amazon.com/webapi/UserController/checkSellerDetails/"+product.seller;
 		    $.get(api2 , function(data, status){
 		    	console.log(data);
-			    $('#sellerInfo').html("Company Name : "+data.companyname+" <br/> User ID: "+data.userid+" Contact No: "+data.contact_no);
+			    $('#sellerInfo').append("Company Name : "+data.companyname+" <br/> User ID: "+data.userid+" Contact No: "+data.contact_no);
+			    
+			 
 			});
 		    
 		    

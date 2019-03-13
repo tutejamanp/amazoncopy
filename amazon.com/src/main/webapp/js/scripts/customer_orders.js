@@ -27,15 +27,17 @@ $(document).ready(function() {
 						
 					    productInfo = data[0];
 					    console.log(productInfo.product_images[0]);
+					    
 					    Template = Template + "<tr><td><figure class='media'>	<div class='img-wrap'><img src='"+productInfo.product_images[0].url+"' class='img-thumbnail img-sm'></div>";
 					    Template = Template +"<figcaption class='media-body'><h6 class='title text-truncate'>"+productInfo.productname+" </h6>";
 					    Template = Template + "</figcaption></figure></td><td><div class='price-wrap'><var class='price'>INR "+product.unitdiscountedamount * product.quantity+"</var>"; 
 					    Template = Template + "<small class='text-muted'>(INR"+product.unitdiscountedamount+" each)</small>";
 					    Template = Template + "</div></td><td><div class='price-wrap'><var class='price'>"+product.quantity+"</var></div>";
+					    Template = Template + "</td><td>"+order.deliveryAddress;
 					    if(product.status == "SHIPPED")
 					    	Template = Template + "</td><td class='text-right'><form method='post'><div class='btn-group btn btn-success' role='group' onclick=\"setrecieved('"+order.orderid+"' , '"+product.productid+"');\">Recieved? </div>";
 					    else {
-					    	Template = Template + "</div></td><td><div class='price-wrap'><var class='price'>"+product.status+"</var></div>";
+					    	Template = Template + "</td><td><div class='price-wrap'><var class='price'>"+product.status+"</var></div>";
 					    }
 						    
 

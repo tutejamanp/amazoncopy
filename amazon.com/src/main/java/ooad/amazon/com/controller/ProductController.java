@@ -33,6 +33,7 @@ import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.ProductImages;
 import ooad.amazon.com.dao.CategoryDAO;
 import ooad.amazon.com.dao.CustomerDAO;
+import ooad.amazon.com.dao.LabelDAO;
 import ooad.amazon.com.dao.ProductDAO;
 
 @Path("/ProductController")
@@ -103,9 +104,13 @@ public class ProductController {
 				@FormDataParam("description") String description,
 				@FormDataParam("quantity") int quantity,
 				@FormDataParam("category") int category,
+				@FormDataParam("subcategory") int subcategory,
 				@FormDataParam("price") int price,
-				@FormDataParam("discountedprice") int discountedprice
-				, @PathParam("seller_id") int seller_id){
+				@FormDataParam("discountedprice") int discountedprice,
+				@FormDataParam("customlabels") String labels,
+				@FormDataParam("manname") String manname,
+				@FormDataParam("manDate") String mandate,
+				@PathParam("seller_id") int seller_id){
 			
 		
 		 
@@ -126,12 +131,34 @@ public class ProductController {
 			prod.setProductname(productname);
 			prod.setDescription(description);
 			prod.setQuantityleft(quantity);
-
-			Category cat = CategoryDAO.getCategorybyid(category);
-		
+			Category cat;
+            if(subcategory == -1)
+            {
+			cat = CategoryDAO.getCategorybyid(category);
 		    prod.setCategory(cat);
+            }
+            
+            else
+            {
+            	cat = CategoryDAO.getCategorybyid(subcategory);
+    		    prod.setCategory(cat);
+            }
 		    
-		    
+            
+            /**YaminiChanges****/
+			DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+			Date date = null;
+			try {
+				date = format.parse(mandate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(date);
+			
+			prod.setManufactured_date(date);
+			/**YaminiChanges****/
+			
 		    ProductImages pi1 = new ProductImages();
 		    pi1.setUrl(storeUrl);
 		    
@@ -140,7 +167,25 @@ public class ProductController {
 		    
 		    prod.setProduct_images(npi);
 		    
-		    int resp = ProductDAO.addproduct(seller_id, prod, cat, npi);
+		    int resp = ProductDAO.addproduct(seller_id, prod, cat , npi);
+		    
+		    /**YaminiChanges****/
+		    //Label lb = new Label();
+		    LabelDAO lbd = new LabelDAO();
+		    System.out.println("labels------------------------------" + labels);
+		    String[]tokens = labels.split(",");
+		    for (int i = 0; i < tokens.length; i++) {
+		    	System.out.println(tokens[i]);
+		    	String[]myTokens = tokens[i].split("--");
+		    	System.out.println("mytokens:"+ myTokens.toString());
+		    	System.out.println(myTokens[0] + " " + myTokens[1]);
+		    	lbd.addLabel(myTokens[0], myTokens[1], prod.getId());
+//	    		lb.setLname(myTokens[0]);
+//	    		lb.setLvalue(myTokens[1]);
+		    }		
+		   
+		    
+		    /**YaminiChanges****/
 			
 			 if(resp >0)
 			 {

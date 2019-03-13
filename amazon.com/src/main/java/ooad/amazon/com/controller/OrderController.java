@@ -38,15 +38,17 @@ public class OrderController {
 			@FormDataParam("sellerid") int sellerid,
 			@FormDataParam("quantity") int quantity,
 			@FormDataParam("cardno") String cardno,
+			@FormDataParam("address") String addr,
 			@FormDataParam("cvv") String cvv){
 		
+		System.out.println("Addressssss:"+addr);
  		List<Integer> sellers = new ArrayList<>();
  		sellers.add(sellerid);
  		List<Integer> prods = new ArrayList<>();
  		prods.add(prodid);
  		List<Integer> quants = new ArrayList<>();
  		quants.add(quantity);
- 		String op = OrderDAO.saveOrder(custid, prods, quants, cardno, cvv);
+ 		String op = OrderDAO.saveOrder(custid, prods, quants, cardno, addr, cvv);
  		if(op.equals("Insufficient Balance"))
  			return Response.status(404).entity(op).build();
  		else
