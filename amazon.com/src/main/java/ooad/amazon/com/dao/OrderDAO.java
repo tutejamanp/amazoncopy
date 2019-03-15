@@ -128,6 +128,10 @@ public static String saveOrder(int custid, List<Integer> prodids, List<Integer> 
 		for(OrderedItem item: items) {
 			System.out.println(item.toString());
 			System.out.println("amount: " + item.getUnitdiscountedamount());
+			
+			int prodid = item.getProductid();
+			Product product = (Product)ses.load(Product.class, prodid);
+			product.setQuantityleft(product.getQuantityleft()-item.getQuantity());
 			item.setStatus("SHIPPED");
 		}
 	//	System.out.println("to:" + sellerid);

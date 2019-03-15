@@ -7,22 +7,17 @@ function viewProduct() {
 		//Ajax Call for getting individual product
 		$.get(api , function(data, status){
 		    product = data[0];
-		    var labelData = data[0].labels;
 		    
-		    var myString = "";
-		    for(var i = 0; i < labelData.length; i++)
-			{ 
-		    	myString += labelData[i].lname + " " + labelData[i].lvalue + "<br>";
-			}
 		    
-		    $('#sellerInfo').append(myString);
-		    //alert("labeldata" + labelData );
+		    console.log("product to be printed is :");
+		    
+		    console.log(product);
+		    
+		    
 		    var api2 = "http://localhost:8055/amazon.com/webapi/UserController/checkSellerDetails/"+product.seller;
 		    $.get(api2 , function(data, status){
 		    	console.log(data);
-			    $('#sellerInfo').append("Company Name : "+data.companyname+" <br/> User ID: "+data.userid+" Contact No: "+data.contact_no);
-			    
-			 
+			    $('#sellerInfo').html("Company Name : "+data.companyname+" <br/> User ID: "+data.userid+" Contact No: "+data.contact_no);
 			});
 		    
 		    
@@ -33,6 +28,7 @@ function viewProduct() {
 		    $('#originalPrice').html(product.price);
 		    $('#discountedPrice').html(product.discountedprice);
 		    $('#description').html(product.description);
+		    $('#qty_left').html(product.quantityleft);
 		    $('#itemImage').html("<img src='"+product.product_images[0].url+"'/>");
 		    var udata = JSON.parse(localStorage.getItem("userdata"));
 
