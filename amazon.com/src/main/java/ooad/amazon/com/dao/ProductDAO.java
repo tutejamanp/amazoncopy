@@ -1,5 +1,6 @@
 package ooad.amazon.com.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -113,7 +114,7 @@ public class ProductDAO {
 	
 	
 	
-public static int updateproduct(int pid , int price , int isbday) {
+public static int setOffer(int pid , String type , int perc, String message, Date endDate) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
 		ses.beginTransaction();
@@ -123,11 +124,10 @@ public static int updateproduct(int pid , int price , int isbday) {
 		
 		Product product = (Product)ses.load(Product.class, pid);
 		System.out.println(product.toString());
-		product.setBdayprice(price);
-		if(isbday == 0)
-		product.setIs_bdayproduct(false);
-		else
-		product.setIs_bdayproduct(true);
+		product.setOfferType(type);
+		product.setOfferdiscpercent(perc);
+		product.setOfferMessage(message);
+		product.setOfferEndDate(endDate);
 		
 		ses.save(product);
 		ses.getTransaction().commit();
@@ -135,7 +135,6 @@ public static int updateproduct(int pid , int price , int isbday) {
 		
 		return pid;
 	}
-	
 	
 
 public static int upprod (Product prod) {
@@ -158,6 +157,8 @@ public static int deleteprod (Product prod) {
 	ses.close();
 	return 1;
 }
+
+
 
 
 

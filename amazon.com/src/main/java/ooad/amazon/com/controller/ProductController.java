@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
+import ooad.amazon.com.bean.CartItem;
 import ooad.amazon.com.bean.Category;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
@@ -131,6 +132,10 @@ public class ProductController {
 			prod.setProductname(productname);
 			prod.setDescription(description);
 			prod.setQuantityleft(quantity);
+			prod.setOfferType("none");
+			prod.setOfferEndDate(new Date());
+			prod.setOfferdiscpercent(0);
+			prod.setOfferMessage("");
 			Category cat;
             if(subcategory == -1)
             {
@@ -204,20 +209,28 @@ public class ProductController {
 	 
 
 	 @POST 
-		@Path("/updateproduct/{pid}")
+		@Path("/setOffer/{pid}")
 		@Consumes(MediaType.MULTIPART_FORM_DATA)
 		public Response updateprd(
-				@FormDataParam("isbdayavil") int bdayavail,
-				@FormDataParam("bdayspprice") int bdayprice
-				, @PathParam("pid") int pid){
+				@FormDataParam("offerType") String offerType,
+				@FormDataParam("offerDiscPercent") int offerdiscpercent,
+				@FormDataParam("offerMessage") String offerMessage,
+				@FormDataParam("offerEndDate") String offerEndDate,
+				@PathParam("pid") int pid){
 			
-		
 		 
-		 System.out.println("bday avil is : "+bdayavail);
-		 System.out.println("bday price is : "+bdayprice);
-		 System.out.println("pid is : "+pid);
-		 
-		 int resp =  ProductDAO.updateproduct(pid , bdayprice , bdayavail);
+		 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+			Date date = null;
+			try {
+				date = format.parse(offerEndDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(date);
+			
+		 if(offerType.equals("none") || offerType.equals("birthday") || offerType.equals("discount") || offerType.equals("buy1get1")) {
+		 int resp =  ProductDAO.setOffer(pid , offerType , offerdiscpercent, offerMessage, date);
 			
 			 if(resp >0)
 			 {
@@ -227,8 +240,11 @@ public class ProductController {
 			 else
 			 {
 				 String result = resp+"";
-				 return Response.status(404).entity(result).build();
+				 return Response.status(201).entity(result).build();
 			 }
+		 }else {
+			 return Response.status(201).entity("Invalid OfferType").build();
+		 }
 			
 		}
 	 
@@ -295,10 +311,48 @@ public class ProductController {
 		}
 	 
 	 
-
-
 	 
+	 @POST 
+		@Path("/addproductincart/{productid}/{quantity}/{customerid}")
+		@Consumes(MediaType.MULTIPART_FORM_DATA)
+		public Response addproductincart(
+				@PathParam("productid") int productid,
+				@PathParam("quantity") int quantity,
+				@PathParam("customerid") int customerid){
+		 
+		 	Product prod = ProductDAO.getProductsbyId(productid).get(0);
+		 	
+			System.out.println("hi manpreet the product is : "+prod);
+			
+		 	
+			System.out.println("issue start point ");
+			
+		 	Customer cust = CustomerDAO.getcustomerbyid(customerid);
+		 	
+		 	
+		 	System.out.println("no issue till this point");
+		 	CartItem cartitem = new CartItem();
+		    
+		    cartitem.setProduct(prod);
+		    cartitem.setQuantity(quantity);
+		 	
+		    
+		 	int resp = CustomerDAO.addprodtocustomercart (cust,cartitem);
+		    
+			 if(resp >0)
+			 {
+				 String result = resp+"";
+				 return Response.status(201).entity(result).build();
+			 }
+			 else
+			 {
+				 String result = resp+"";
+				 return Response.status(404).entity(result).build();
+			 }
+			
+		}
 	 
+
 	 
 	 private void writeToFile(InputStream uploadedInputStream,
 				String uploadedFileLocation) {

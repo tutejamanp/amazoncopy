@@ -1,5 +1,6 @@
 package ooad.amazon.com.dao;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 
 import ooad.amazon.com.bean.Bank;
 import ooad.amazon.com.bean.Card;
+import ooad.amazon.com.bean.CartItem;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Order;
 import ooad.amazon.com.bean.Product;
@@ -152,5 +154,44 @@ public static String addsellerdetails(Seller seller, String cardno, String cvv) 
 		else
 			return 0;
 	}
+	
+	
+
+	public static List<CartItem> getUserCart(int userid) {
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		
+		Customer user = (Customer)ses.load(Customer.class, userid);
+		System.out.println("&&&&&&&&&" + user.toString());
+		Hibernate.initialize(user.getCartlist());
+	
+		return user.getCartlist();
+		
+	}
+	
+	public static int emptyUserCart(int userid) {
+		Session ses = CommonSessionFactory.sf.openSession();
+		ses.beginTransaction();
+		
+		Customer user = (Customer)ses.load(Customer.class, userid);
+		System.out.println("&&&&&&&&&" + user.toString());
+		Hibernate.initialize(user.getCartlist());
+		List <CartItem> njlist = new ArrayList<CartItem> ();
+		System.out.println("update user after this point :");
+		
+		user.setCartlist(njlist);
+		
+		ses.getTransaction().commit();
+		ses.close();
+		
+		return 1;
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 }

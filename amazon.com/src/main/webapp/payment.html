@@ -58,20 +58,29 @@
 		
 		if(filled == true) {
 			console.log("Here");
-			var form = new FormData();
+			
 			var udata = JSON.parse(localStorage.getItem("userdata"));
 			var addr = localStorage.getItem("shippingAddress");
 			alert("4444" + addr);
+			console.log("-----" + localStorage.getItem("directBuy"));
+			if(localStorage.getItem("directBuy") == true){
+			console.log("**********------------if part");
+			var form = new FormData();
 			form.append('customerid', udata.id );
+			
+			
 			var cartqty = localStorage.getItem("cartProductQty");
 			var cartprice = localStorage.getItem("cartProductValue");
 			var cost = cartqty * cartprice;
+			var currprodid = localStorage.getItem("viewingProduct")
+			
 			form.append('cardno', $('#cardno').val());
 			form.append('cvv', $('#cvv').val());
 			form.append('quantity', cartqty);
 			form.append('address', addr);
-			form.append('productid', localStorage.getItem("viewingProduct"));
+			form.append('productid',currprodid);
 			console.log(form);
+
 			
 			var data = form;
 		    
@@ -85,7 +94,7 @@
 		       	processData: false,
 		        contentType: false,
 		        cache: false,
-		        async: true,
+		        async: false,
 		        timeout: 600000,
 		        
 		        success:function(result){
@@ -98,13 +107,120 @@
 		        	alert("Balance LOW!!");
 		        }
 		    });
+			
+			
+			
+			}
+			
+			else{
+				console.log("*******------------else part");
+				var api = "http://localhost:8055/amazon.com/webapi/UserController/getUserCart/"+udata.id;
+				$.get(api , function(data, status){
+					
+					var allordersplaced = true;
+					
+						data.forEach(function(cartitem){
+
+						    var udata = JSON.parse(localStorage.getItem("userdata"));
+						    var productInfo = cartitem.product;
+							var form = new FormData();
+							form.append('customerid', udata.id );
+							
+							
+							var cartqty = cartitem.quantity;
+							var cartprice = productInfo.discountedprice;
+							var cost = cartqty * cartprice;
+							var currprodid = productInfo.id;
+							
+							form.append('cardno', $('#cardno').val());
+							form.append('cvv', $('#cvv').val());
+							form.append('quantity', cartqty);
+							form.append('address', addr);
+							form.append('productid',currprodid);
+							console.log(form + "Naru Form Data");
+							
+							
+							var data = form;
+						    
+						    console.log(udata.emailid);
+						    $.ajax({
+						    	type: "POST",
+								enctype: 'multipart/form-data',
+						        url: "http://localhost:8055/amazon.com/webapi/OrderController/saveorder",
+						        data: data, 
+						       	processData: false,
+						        contentType: false,
+						        cache: false,
+						        async: false,
+						        timeout: 600000,
+						        
+						        success:function(result){
+						        	//window.alert(result);
+						        	//if(result == "Success")
+						        		//window.location.href="customer_orders.html";
+						        	//location.reload(true);
+						        },
+						        error:function(result) {
+						        	allordersplaced = false;
+						        	alert("Balance LOW!!");
+						        }
+						    });
+							
+							
+							
+						});
+						
+						if(allordersplaced){
+							
+							var udata = JSON.parse(localStorage.getItem("userdata"));
+							uid = udata.id;
+							
+							var form = new FormData();
+							//form.append('orderid', orderid);
+							var data = form;
+							//Ajax Call for getting individual product
+							
+							$.ajax({
+						    	type: "POST",
+								enctype: 'multipart/form-data',
+						        url: "http://localhost:8055/amazon.com/webapi/UserController/emptyCart/"+uid,
+						        data: form, 
+						       	processData: false,
+						        contentType: false,
+						        cache: false,
+						        async: true,
+						        timeout: 600000,
+						        
+						        success:function(result){
+						        	alert("Successfully placed order from cart!!!");
+						        	window.location.href="customer_orders.html";
+						        	//window.location.href = "view.html";
+						        },
+						        error: function(data){
+						            alert("fail");
+						        }
+						    });
+							
+							
+						}
+						
+					   	   // $('#product_hidden').html("<input type='hidden' name='product_id' value='"+localStorage.getItem("viewingProduct")+"' id='product_id' />");
+					});
+				
+			}
+			
+			
+			
+
 			//alert("Success. You've purchase the item");
 			
 			//localStorage.removeItem("cartProductQty");
 			//localStorage.removeItem("cartProduct");
 			//localStorage.removeItem("directBuy");
 			//window.location.href="home.jsp";
-		} else {
+		}
+		
+		else {
 	          alert('Please fill all the fields');
 		}
 	}

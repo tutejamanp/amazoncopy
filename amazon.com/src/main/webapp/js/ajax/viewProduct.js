@@ -35,11 +35,24 @@ function viewProduct() {
 		    var responsebirthdate = new Date(udata.dob);
 			var currentdate = new Date();
 
-			if(currentdate.getMonth() == responsebirthdate.getMonth()+1 &&  currentdate.getDate() == responsebirthdate.getDate() ){
-				console.log(product.bdayprice);
-
-				$('#birthday_price').html("<span class=\"currency\">INR  ₹</span><span class=\"num\" id=\"discountedPrice\">"+product.bdayprice+"</span>");
+			if(product.offerType == "birthday" && currentdate.getMonth() == responsebirthdate.getMonth() &&  currentdate.getDate() == responsebirthdate.getDate() ){
+				console.log("here");
+				var discountRate = product.discountedprice * (100 - product.offerdiscpercent)/100;
+				$('#discountedPrice').html("<del>"+product.discountedprice+"</del>");
+				$('#birthday_price').html("<hr/>"+product.offerMessage+"<hr/><span class=\"currency\">INR  ₹</span><span class=\"num\" id=\"discountedPrice\">"+discountRate+"</span>");
 				console.log("Works");
+			}
+			else if(product.offerType == "discount" && Date.now() < product.offerEndDate) {
+				var discountRate = product.discountedprice * (100 - product.offerdiscpercent)/100;
+			    $('#discountedPrice').html("<del>"+product.discountedprice+"</del>");
+				$('#birthday_price').html("<hr/>"+product.offerMessage+"<hr/><span class=\"currency\">INR  ₹</span><span class=\"num\" id=\"discountedPrice\">"+discountRate+"</span>");
+				$('#expiryDate').html("Expiring On :"+new Date(product.offerEndDate));
+			}
+			else if(product.offerType == "buy1get1" && Date.now() < product.offerEndDate) {
+				//var discountRate = product.discountedprice * (100 - product.offerdiscpercent)/100;
+			    //$('#discountedPrice').html("<del>"+product.discountedprice+"</del>");
+				$('#birthday_price').html("<hr/>"+product.offerMessage+"<hr/>");
+				$('#expiryDate').html("Expiring On :"+new Date(product.offerEndDate));
 			}
 		   // $('#product_hidden').html("<input type='hidden' name='product_id' value='"+localStorage.getItem("viewingProduct")+"' id='product_id' />");
 		});

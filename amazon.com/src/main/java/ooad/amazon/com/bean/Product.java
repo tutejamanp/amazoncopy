@@ -36,8 +36,12 @@ public class Product {
 	private float starratings = 0f;
 	private int totalreviews = 0;
 	private int seller;
-	private int bdayprice;
-	private boolean is_bdayproduct;
+	
+	
+	private String offerType;
+	private float offerdiscpercent;
+	private String offerMessage;
+	private Date offerEndDate;
 	
 	private int stock;
 	private String color;
@@ -46,21 +50,40 @@ public class Product {
 	
 	
 	
-	public int getBdayprice() {
-		return bdayprice;
+	
+
+	public String getOfferType() {
+		return offerType;
 	}
 
-	public void setBdayprice(int bdayprice) {
-		this.bdayprice = bdayprice;
+	public void setOfferType(String offerType) {
+		this.offerType = offerType;
 	}
 
-	public boolean isIs_bdayproduct() {
-		return is_bdayproduct;
+	public float getOfferdiscpercent() {
+		return offerdiscpercent;
 	}
 
-	public void setIs_bdayproduct(boolean is_bdayproduct) {
-		this.is_bdayproduct = is_bdayproduct;
+	public void setOfferdiscpercent(float offerdiscpercent) {
+		this.offerdiscpercent = offerdiscpercent;
 	}
+
+	public String getOfferMessage() {
+		return offerMessage;
+	}
+
+	public void setOfferMessage(String offerMessage) {
+		this.offerMessage = offerMessage;
+	}
+
+	public Date getOfferEndDate() {
+		return offerEndDate;
+	}
+
+	public void setOfferEndDate(Date offerEndDate) {
+		this.offerEndDate = offerEndDate;
+	}
+
 
 	@OneToOne
 	private Category category;
@@ -141,7 +164,7 @@ public class Product {
 	}
 
 	public void setDiscountedprice(int discountedprice) {
-		this.bdayprice = discountedprice;
+		this.offerdiscpercent = 0;
 		this.discountedprice = discountedprice;
 	}
 

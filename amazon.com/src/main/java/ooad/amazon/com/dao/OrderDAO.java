@@ -80,14 +80,33 @@ public static String saveOrder(int custid, List<Integer> prodids, List<Integer> 
 				//Card sellercard = cardsseller.get(0);
 				
 				Product product = (Product)ses.load(Product.class, prodids.get(i));
+				System.out.println("----------------" + product.toString());
+				Date todaysDate = new Date();
+				int pricetoSet = 0;
+				if(product.getOfferType().equals("discount") && product.getOfferEndDate().compareTo(todaysDate) == 1) {
+					System.out.println("if part");
+					pricetoSet = (int) (product.getDiscountedprice() * product.getOfferdiscpercent()/100) * quantities.get(i);
+
+				}
+				else {
+					System.out.println("else part");
+					pricetoSet = product.getDiscountedprice() * quantities.get(i);
+				}
+				
 			
 				System.out.println(buyercard.toString() + " " + selleracc.toString() + " "  + product.toString());
 		
 				
-					selleracc.setAmzamount(selleracc.getAmzamount() + product.getDiscountedprice()* quantities.get(i));
-					buyercard.setBalance(buyercard.getBalance() - product.getDiscountedprice()* quantities.get(i));
+					selleracc.setAmzamount(selleracc.getAmzamount() + pricetoSet);
 					
-					OrderedItem item = new OrderedItem(product.getId(),quantities.get(i), product.getPrice(), product.getDiscountedprice(), "PENDING");
+					System.out.println("current balance : " +buyercard.getBalance());
+					System.out.println("subtraction amount is : "+pricetoSet);
+					
+					buyercard.setBalance(buyercard.getBalance() - pricetoSet);
+					
+					System.out.println("final balance is: " + buyercard.getBalance());
+					
+					OrderedItem item = new OrderedItem(product.getId(),quantities.get(i), product.getPrice(), pricetoSet, "PENDING");
 					itemlist.add(item);
 					
 					

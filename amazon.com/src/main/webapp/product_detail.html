@@ -76,6 +76,22 @@ function addcheckoutitems() {
 	localStorage.setItem("directBuy", true);
 	window.location.href="check_out.html";
 }
+
+function addcartitems() {
+	var product_id = localStorage.getItem("viewingProduct");
+	var product_quantity = $('#product_qty').val();
+	var udata = JSON.parse(localStorage.getItem("userdata"));
+	console.log(udata);
+	
+	additemintocart(product_id,product_quantity,udata.id);
+	
+	
+	//localStorage.setItem("cartProduct", product_id);
+	//localStorage.setItem("cartProductQty", product_quantity);
+	//localStorage.setItem("directBuy", true);
+	//window.location.href="check_out.html";
+}
+
 </script>
 
 </head>
@@ -255,8 +271,8 @@ function addcheckoutitems() {
 	
 		
 	</var> 
-	 
-	 
+	 <hr/>
+	 <var id="expiryDate"></var>
 </div> <!-- price-detail-wrap .// -->
 <dl>
   <dt>Description</dt>
@@ -292,7 +308,7 @@ function addcheckoutitems() {
 	<hr>
 	<div id="product_hidden"></div>
 	<a href="#" class="btn  btn-warning"  onclick="addcheckoutitems();" > Buy now </a>
-	<a href="#" class="btn  btn-outline-warning"> <i class="fas fa-shopping-cart"></i> Add to cart </a><hr/>
+	<a href="#" class="btn  btn-outline-warning" onclick="addcartitems();"> <i class="fas fa-shopping-cart"></i> Add to cart </a><hr/>
 	<a href="leave_review.html" class="btn  btn-success" id="feedbackButton">  Leave Feedback </a>
 
 <!-- short-info-wrap .// -->

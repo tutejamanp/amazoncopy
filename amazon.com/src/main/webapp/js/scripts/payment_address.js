@@ -16,14 +16,20 @@ $(document).ready(function(){
 
 
 function shipHere(addressline1, addressline2, street, city, pincode) {
-	var data = new FormData();
-	data.append('addressline1', addressline1);
-	data.append('addressline2', addressline2);
-	data.append('street', street);
-	data.append('city', city);
-	data.append('pincode', pincode);
-	
 	var data2 = addressline1 + ", " + addressline2 + ", " +  street + ", " + city + ", " + pincode;
+	localStorage.setItem("shippingAddress", data2);
+	window.location.href = "payment.html";
+}
+
+function shipToNewAddress(){
+	
+	var addressline1 = document.getElementById("addr_line1").value;
+	var addressline2 = document.getElementById("addr_line2").value;
+	var street = document.getElementById("street").value;
+	var city = document.getElementById("city").value;
+	var pincode = document.getElementById("pincode").value;
+	var data2 = addressline1 + ", " + addressline2 + ", " +  street + ", " + city + ", " + pincode;
+	alert(data2);
 	localStorage.setItem("shippingAddress", data2);
 	window.location.href = "payment.html";
 }

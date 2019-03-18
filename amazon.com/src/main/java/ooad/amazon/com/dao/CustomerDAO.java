@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +13,9 @@ import org.hibernate.cfg.Configuration;
 
 import ooad.amazon.com.bean.Address;
 import ooad.amazon.com.bean.Bank;
+import ooad.amazon.com.bean.CartItem;
 import ooad.amazon.com.bean.Customer;
+import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.User;
 import ooad.amazon.com.resources.CommonSessionFactory;
 
@@ -56,6 +59,17 @@ public class CustomerDAO {
 	
 	
 	
+public static Customer getcustomerbyid (int customerid) {
+	Session ses = CommonSessionFactory.sf.openSession();
+	ses.beginTransaction();
+	Customer customer = (Customer)ses.load(Customer.class, customerid);
+	Hibernate.initialize(customer.getCartlist());
+	ses.getTransaction().commit();
+	ses.close();
+	return customer;
+	} 
+	
+	
 public static List<Address> getaddressofuser (int userid) {
 		
 		Session ses = CommonSessionFactory.sf.openSession();
@@ -68,7 +82,32 @@ public static List<Address> getaddressofuser (int userid) {
 			return addrList;
 	} 
 	
+
+public static int addprodtocustomercart (Customer cust, CartItem cartitem ) {
+	Session ses = CommonSessionFactory.sf.openSession();
 	
+	ses.beginTransaction();
+	System.out.println("wassssuppppp kklklkl ");
+	
+	List<CartItem> cartitemlist =cust.getCartlist();
+ 	//cartitemlist = cust.getCartlist();
+    
+ 	
+    cartitemlist.add(cartitem);
+ 	
+    cust.setCartlist(cartitemlist);
+	
+	ses.update(cust);
+	System.out.println("wassssuppppp 22 ");
+	ses.getTransaction().commit();
+	System.out.println("wassssuppppp 33 ");
+	ses.close();
+	return 1;
+}
+
+
+
+
 
 	/*public static void main(String[] args) {
 		SessionFactory sf = new Configuration().configure().buildSessionFactory();

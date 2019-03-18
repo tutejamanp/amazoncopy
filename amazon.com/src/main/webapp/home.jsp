@@ -106,7 +106,6 @@ $.get(api , function(data, status){
 		{
 		if(i == 0) {
 			var myString = myString+ "<div class='item-slide'>		<img src='http://localhost:8055/amazon.com/"+data[i].url+"' onclick= 'setCategory("+data[i].categorytoshow+");'>		</div>";
-			console.log(myString);
 
 		} else {
 			var myString = myString+ "<div class='item-slide'>		<img style='display:none' src='http://localhost:8055/amazon.com/"+data[i].url+"'  onclick= 'setCategory("+data[i].categorytoshow+");'>		</div>";
@@ -369,7 +368,7 @@ function getSubCat(catID)
 				</a>
 			</div>
 			<div class="col-auto">
-				<a href="check_out.html" class="widget-header">
+				<a href="customer_cart.html" class="widget-header">
 					<div class="icontext">
 												<div class="icon-wrap"><i class="text-light icon-sm  fa fa-shopping-cart"></i></div>
 						<span class="small round badge badge-secondary">0</span>

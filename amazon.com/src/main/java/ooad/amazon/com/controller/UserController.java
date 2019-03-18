@@ -23,6 +23,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import ooad.amazon.com.bean.Address;
 import ooad.amazon.com.bean.Bank;
+import ooad.amazon.com.bean.CartItem;
 import ooad.amazon.com.bean.Customer;
 import ooad.amazon.com.bean.Product;
 import ooad.amazon.com.bean.Seller;
@@ -92,7 +93,7 @@ public class UserController {
 		cus.setPassword(password);
 		cus.setAddrlist(addrList);
 		
-		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date date = null;
 		try {
 			date = format.parse(dob);
@@ -196,6 +197,32 @@ public class UserController {
 		return Response.ok(amt).build();
 			
 	    }
+	
+
+	@Path("/getUserCart/{userid}")
+	 @GET
+	 @Produces(MediaType.APPLICATION_JSON)
+	    public Response getusercart(@PathParam("userid") int userid) {
+
+		List<CartItem> lklist = UserDAO.getUserCart(userid);
+		return Response.ok(lklist).build();
+			
+	    }
+
+	@POST 
+	@Path("/emptyCart/{uid}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.TEXT_PLAIN )
+	public Response emptyCart(
+			@PathParam("uid") int uid){
+		int resp = UserDAO.emptyUserCart(uid);
+		return Response.ok(resp).build();			 
+	}
+	
+	
+	
+	
+	
 	
 	
 	
