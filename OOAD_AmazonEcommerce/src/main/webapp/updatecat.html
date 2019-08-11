@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Bootstrap-ecommerce by Vosidiy">
+
+<title>Amazon OOAD Project</title>
+
+
+<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
+<!-- jQuery -->
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
+
+<!-- plugin: owl carousel  -->
+<link href="plugins/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<link href="plugins/owlcarousel/assets/owl.theme.default.css" rel="stylesheet">
+
+<script src="plugins/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- custom style -->
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+<link href="css/custom.css" rel="stylesheet"  />
+
+
+<script>
+
+$(document).ready(function() {
+var api;
+api = "http://localhost:8055/amazon.com/webapi/CategoryController/rootcategories";
+
+$.get(api , function(data, status){
+
+    var myString="";
+    myString = myString + "<select id='superCat'> <option value='0'>-SELECT SUPERCATEGORY-</option>";
+		
+    for(var i = 0; i < data.length; i++)
+	{
+    	 //myString = myString + "<a href='#'><p onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a></p> ";
+    	 //myString = myString + "<a href='#' onclick = \"subcat('" +data[i].categoryname+"');\">"+data[i].categoryname +" </a>";
+    	 myString=myString+"<option value = '"+ data[i].cat_id +"'>"+ data[i].categoryname +"</option>";
+	}
+    myString = myString + "</select>"
+    //alert(""+myString);
+    
+    $('#cat').html(myString);
+    $('#addsupid').text(0);
+
+		});
+		
+		$('#catid').val(localStorage.getItem("categorytoupdate"));
+		
+var api;
+api = "http://localhost:8055/amazon.com/webapi/CategoryController/categoryById/"+localStorage.getItem("categorytoupdate");
+
+$.get(api , function(data, status){
+	console.log(data);
+	$('#addcatname').val(data.categoryname);
+	$('#temp1_name').val(data.temp1_name);
+	$('#temp2_name').val(data.temp2_name);
+	$('#temp3_name').val(data.temp3_name);
+	$('#temp4_name').val(data.temp4_name);
+	$('#temp5_name').val(data.temp5_name);
+	$('#temp6_name').val(data.temp6_name);
+	$('#catid').val(localStorage.getItem("categorytoupdate"));
+
+	
+});	
+		
+		
+		
+		
+		
+});
+
+function updateCategoryForm() {
+	
+    var obj = {
+			catname 		: $('#addcatname').val() ,
+			supid			: $('#superCat').val(),
+			temp1_name		: $('#temp1_name').val(),
+			temp2_name		: $('#temp2_name').val(),
+			temp3_name		: $('#temp3_name').val(),
+			temp4_name		: $('#temp4_name').val(),
+			temp5_name		: $('#temp5_name').val(),
+			temp6_name		: $('#temp6_name').val(),
+			
+	};
+    alert(obj.supid);
+    $.ajax({
+		type: 'POST', // GET
+		url:"http://localhost:8055/amazon.com/webapi/CategoryController/updateCategory/"+localStorage.getItem("categorytoupdate"),
+		data: obj,
+		success: function(data, textStatus, jqXHR){
+			alert("success");
+
+            
+        },
+        error: function(jqXHR, textStatus, errorThrown){
+            alert('failure');
+        }
+		});
+    
+
+}
+</script>
+
+
+
+
+
+
+
+
+
+<!-- jQuery -->
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"> </script>
+</head>
+<body>
+<div id="admin_header_container">
+</div>
+<!--  --------------------------------------------main    body------------------------------------------------------------   -->
+ <section class="section-main bg padding-y-sm">
+<div class="card">
+  <div class="card-body" >
+  <h4 class="card-title mt-3 text-center">Admin Add Category</h4>
+  	<h5 class="card-title" id="currentCat"><a href ='javascript:void(0);' onclick='back(0);'>SUPERCATEGORY</a> » </h5>
+    <h5 class="card-title" id="cat"></h5>
+</div> <!-- card.// -->
+<div class="input-group-append">
+				    </div>
+ <!-- container .//  -->
+</section>
+ 
+  <section class="section-main bg padding-y-sm">
+<div class="card">
+  <div class="card-body" >
+<form name="updateCategoryData" method="post">
+CURR CATEGORY :&nbsp<input type="text" name="catname" id="addcatname"><br><br>
+
+<div id="showlater">
+Fixed Field1 name:&nbsp<input type="text" name="temp1_name" id="temp1_name"><br><br>
+Fixed Field2 name:&nbsp<input type="text" name="temp2_name" id="temp2_name"><br><br>
+Fixed Field3 name:&nbsp<input type="text" name="temp3_name" id="temp3_name"><br><br>
+Fixed Field4 name:&nbsp<input type="text" name="temp4_name" id="temp4_name"><br><br>
+Fixed Field5 name:&nbsp<input type="text" name="temp5_name" id="temp5_name"><br><br>
+Fixed Field6 name:&nbsp<input type="text" name="temp6_name" id="temp6_name"><br><br>
+<input type="hidden" name="cat_id" value="0" id="catid" />
+<input type="hidden" name="supid" id="superid" value="0" />		   
+
+</div>
+<input type ="button" onclick="updateCategoryForm();" value="Update" >
+</form>
+<p id="addsupid" hidden></p>
+</div> <!-- card.// -->
+</div>		
+ <!-- container .//  -->
+</section>
+
+ <!--  ---------------------------------------------main    body  end---------------------------------------------------------  -->
+ 
+
+
+<div id="admin_footer_container">
+
+</div>
+<!-- ========================= FOOTER END // ========================= -->
+
+
+</body>
+
+</html>
